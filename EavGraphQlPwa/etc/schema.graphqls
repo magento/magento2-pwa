@@ -1,0 +1,109 @@
+# Copyright © Magento, Inc. All rights reserved.
+# See COPYING.txt for license details.
+
+type Query {
+    customAttributeMetadataV2(
+        entityType: AttributeEntityTypeEnum!,
+        attributeUids:[ID!] = null,
+        showSystemAttributes: Boolean=false):
+    CustomAttributeMetadataV2
+    @resolver(class: "Magento\\EavGraphQlPwa\\Model\\Resolver\\CustomAttributeMetadataV2")
+    @doc(description: "The customAttributeMetadataV2 query returns the list of attributes metadata")
+    @cache(cacheable: false)
+}
+
+type CustomAttributeMetadataV2 @doc(description: "CustomAttributeMetadataV2 defines an array of attributes metadata such as attribute_codes, entity_types, etc") {
+    items: [AttributeMetadataInterface] @doc(description: "An array of attributes")
+}
+
+interface AttributeMetadataInterface @typeResolver(class: "Magento\\EavGraphQlPwa\\Model\\TypeResolver\\AttributeMetadataInterfaceComposite") {
+    uid: ID @doc(description: "The unique ID for attribute.")
+    code: String @doc(description: "The unique identifier for an attribute code. This value should be in lowercase letters without spaces.")
+    label: String @doc(description: "Default attribute label")
+    attribute_labels: [StoreLabels] @resolver(class: "Magento\\EavGraphQlPwa\\Model\\Resolver\\AttributeLabels") @doc(description: "Defines attribute labels per store")
+    data_type: String @doc(description: "The data type of the attribute")
+    sort_order: Int @doc(description: "The relative position of the attribute")
+    is_system: Boolean @doc(description: "Defines whether attribute is system")
+    entity_type: AttributeEntityTypeEnum @doc(description: "The type of entity that defines the attribute")
+    ui_input: UiInputTypeInterface @doc(description: "Defines attribute frontend UI properties")
+}
+
+interface UiInputTypeInterface @typeResolver(class: "Magento\\EavGraphQlPwa\\Model\\TypeResolver\\UiInputComposite") {
+    ui_input_type: UiInputTypeEnum @doc(description: "The frontend input type of the attribute")
+}
+
+interface AttributeOptionsInterface @typeResolver(class: "Magento\\EavGraphQlPwa\\Model\\TypeResolver\\AttributeOptionsTypeInterface") {
+    attribute_options: [AttributeOptionInterface]  @resolver(class: "Magento\\EavGraphQlPwa\\Model\\Resolver\\AttributeOptions") @doc(description: "Attribute options list")
+}
+
+interface SelectableInputTypeInterface @typeResolver(class: "Magento\\EavGraphQlPwa\\Model\\TypeResolver\\SelectableInputTypeInterface") {
+    attribute_options: [AttributeOptionInterface]
+}
+
+interface AttributeOptionInterface @typeResolver(class: "Magento\\EavGraphQlPwa\\Model\\TypeResolver\\AttributeOptionTypeInterface") {
+    uid: ID!
+    label: String
+}
+
+type AttributeOptions implements AttributeOptionsInterface {
+}
+
+type AttributeOption implements AttributeOptionInterface {
+}
+
+type UiAttributeTypeSelect implements UiInputTypeInterface, AttributeOptionsInterface, SelectableInputTypeInterface {
+}
+
+type UiAttributeTypeAny implements UiInputTypeInterface {
+}
+
+type ProductAttributeMetadata implements AttributeMetadataInterface {
+    lists_to_use_in: [CustomAttributesListsEnum!] @resolver(class: "Magento\\EavGraphQlPwa\\Model\\Resolver\\ProductAttributes") @doc(description: "Defines store front places where attribute is used")
+}
+
+type StoreLabels {
+    store_code: String
+    label: String
+}
+
+enum AttributeEntityTypeEnum {
+    PRODUCT
+}
+
+enum CustomAttributesListsEnum {
+    PRODUCT_DETAILS_PAGE
+    PRODUCTS_LISTING
+    PRODUCTS_COMPARE
+    PRODUCT_SORT
+    PRODUCT_FILTER
+    PRODUCT_SEARCH_RESULTS_FILTER
+    ADVANCED_CATALOG_SEARCH
+}
+
+enum ObjectDataTypeEnum {
+    STRING
+    FLOAT
+    INT
+    BOOLEAN
+}
+
+enum UiInputTypeEnum {
+    TEXT
+    TEXTAREA
+    MULTILINE
+    DATE
+    DATETIME
+    SELECT
+    MULTISELECT
+    BOOLEAN
+    FILE
+    IMAGE
+    SWATCH_VISUAL
+    SWATCH_TEXT
+    PRICE
+    MEDIA_IMAGE
+    WEEE
+    HIDDEN
+    GALLERY
+    WEIGHT
+}
