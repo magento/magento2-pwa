@@ -1,0 +1,23 @@
+# Copyright © Magento, Inc. All rights reserved.
+# See COPYING.txt for license details.
+
+type Mutation {
+    contactUs(
+        input: ContactUsInput!
+    ): ContactUsOutput @doc(description:"Sends the contact us email with given information") @resolver(class: "Magento\\ContactGraphQlPwa\\Model\\Resolver\\ContactUs")
+}
+
+input ContactUsInput {
+    email: String
+    name: String
+    telephone: String
+    comment: String
+}
+
+type ContactUsOutput {
+    status: Boolean! @doc(description: "Returns the status of the contact request")
+}
+
+type StoreConfig @doc(description: "The type contains information about a store config") {
+    contact_enabled : Boolean @doc(description: "Contact Form Enabled Flag")
+}
