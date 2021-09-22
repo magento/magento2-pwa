@@ -11,6 +11,7 @@ use Magento\Framework\GraphQl\Config\Element\Field;
 use Magento\Framework\GraphQl\Query\ResolverInterface;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
 use Magento\Store\Api\StoreRepositoryInterface;
+use Magento\Framework\Exception\LocalizedException;
 
 /**
  * @inheritdoc
