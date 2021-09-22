@@ -1,0 +1,11 @@
+{
+    "name": "magento/pwa",
+    "description": "PWA metapackage",
+    "version": "0.0.1",
+    "require": {
+        "magento/module-pwa": "*",
+        "magento/module-cms-pwa": "*",
+        "magento/module-pwa-analytics": "*"
+    },
+    "type": "metapackage"
+}
