@@ -11,17 +11,17 @@ use Magento\Framework\GraphQl\Exception\GraphQlInputException;
 use Magento\Framework\GraphQl\Query\Resolver\TypeResolverInterface;
 
 /**
- * {@inheritdoc}
+ * @inheritdoc
  */
 class UiInputComposite implements TypeResolverInterface
 {
     /**
-     * TypeResolverInterface[]
+     * @var TypeResolverInterface[]
      */
     private $uiInputTypeResolvers = [];
 
     /**
-     * @param TypeResolverInterface[] uiInputTypeResolvers
+     * @param TypeResolverInterface[] $uiInputTypeResolvers
      */
     public function __construct(array $uiInputTypeResolvers = [])
     {
@@ -29,7 +29,8 @@ class UiInputComposite implements TypeResolverInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
+     *
      * @throws GraphQlInputException
      */
     public function resolveType(array $data) : string

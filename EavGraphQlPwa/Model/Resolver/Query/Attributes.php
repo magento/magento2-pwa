@@ -43,12 +43,11 @@ class Attributes
     private $uidEncoder;
 
     /**
-     * Comment
-     *
      * @param AttributeRepositoryInterface $attributeRepository
      * @param ServiceTypeToEntityTypeMap $serviceTypeMap
      * @param SearchCriteriaBuilder $searchCriteriaBuilder
      * @param FilterBuilder $filterBuilder
+     * @param Uid $uidEncoder
      */
     public function __construct(
         AttributeRepositoryInterface $attributeRepository,
@@ -65,6 +64,8 @@ class Attributes
     }
 
     /**
+     * Get Attributes
+     *
      * @param string $entityType
      * @param array $attributeUids
      * @param bool $showSystem

@@ -47,21 +47,18 @@ class CustomAttributeMetadataV2 implements ResolverInterface
     private $type;
 
     /**
-     * @var StoreRepositoryInterface
-     */
-    private $storeRepository;
-
-    /**
      * @param Attributes $attributes
      * @param DataMapperInterface $enumDataMapper
+     * @param Uid $uidEncoder
+     * @param EnumLookup $enumLookup
+     * @param Type $type
      */
     public function __construct(
         Attributes $attributes,
         DataMapperInterface $enumDataMapper,
         Uid $uidEncoder,
         EnumLookup $enumLookup,
-        Type $type,
-        StoreRepositoryInterface $storeRepository
+        Type $type
     ) {
         $this->attributes = $attributes;
         $this->enumDataMapper = $enumDataMapper;
@@ -134,6 +131,8 @@ class CustomAttributeMetadataV2 implements ResolverInterface
     }
 
     /**
+     * Get mapped entity type
+     *
      * @param string $entityType
      * @return string|null
      */

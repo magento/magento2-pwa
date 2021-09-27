@@ -11,17 +11,17 @@ use Magento\Framework\GraphQl\Exception\GraphQlInputException;
 use Magento\Framework\GraphQl\Query\Resolver\TypeResolverInterface;
 
 /**
- * {@inheritdoc}
+ * @inheritdoc
  */
 class AttributeMetadataInterfaceComposite implements TypeResolverInterface
 {
     /**
-     * TypeResolverInterface[]
+     * @var TypeResolverInterface[]
      */
     private $attributeEntityTypeResolvers = [];
 
     /**
-     * @param TypeResolverInterface[] attributeEntityTypeResolvers
+     * @param TypeResolverInterface[] $attributeEntityTypeResolvers
      */
     public function __construct(array $attributeEntityTypeResolvers = [])
     {
@@ -29,7 +29,8 @@ class AttributeMetadataInterfaceComposite implements TypeResolverInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
+     *
      * @throws GraphQlInputException
      */
     public function resolveType(array $data) : string

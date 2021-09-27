@@ -9,11 +9,9 @@ namespace Magento\EavGraphQlPwa\Model\Resolver;
 
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\GraphQl\Config\Element\Field;
-use Magento\Framework\GraphQl\Query\EnumLookup;
 use Magento\Framework\GraphQl\Query\ResolverInterface;
 use Magento\Framework\GraphQl\Query\Uid;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
-use Magento\EavGraphQl\Model\Resolver\Query\Type;
 
 /**
  * @inheritdoc
@@ -27,13 +25,9 @@ class AttributeOptions implements ResolverInterface
      * @param Uid $uidEncoder
      */
     public function __construct(
-        Uid $uidEncoder,
-        Type $type,
-        EnumLookup $enumLookup
+        Uid $uidEncoder
     ) {
         $this->uidEncoder = $uidEncoder;
-        $this->type = $type;
-        $this->enumLookup = $enumLookup;
     }
 
     /**

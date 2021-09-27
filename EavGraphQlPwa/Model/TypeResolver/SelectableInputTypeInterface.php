@@ -8,15 +8,17 @@ declare(strict_types=1);
 namespace Magento\EavGraphQlPwa\Model\TypeResolver;
 
 namespace Magento\EavGraphQlPwa\Model\TypeResolver;
+
 use Magento\Framework\GraphQl\Query\Resolver\TypeResolverInterface;
 
 /**
- * {@inheritdoc}
+ * @inheritdoc
  */
 class SelectableInputTypeInterface implements TypeResolverInterface
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
+     *
      * @throws GraphQlInputException
      */
     public function resolveType(array $data) : string

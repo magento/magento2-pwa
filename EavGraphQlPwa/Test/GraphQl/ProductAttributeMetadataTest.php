@@ -259,11 +259,15 @@ QUERY;
         $expectedIsSystem,
         $actualResponse
     ) {
-        $attributeMetaDataItems = array_map(null, $actualResponse['customAttributeMetadataV2']['items'], $expectedDataTypes);
+        $attributeMetaDataItems = array_map(
+            null,
+            $actualResponse['customAttributeMetadataV2']['items'],
+            $expectedDataTypes
+        );
 
         foreach ($attributeMetaDataItems as $itemIndex => $itemArray) {
             $this->assertResponseFields(
-                $attributeMetaDataItems[$itemIndex][0],
+                $itemArray[0],
                 [
                     "__typename" => 'ProductAttributeMetadata',
                     "uid" => $expectedAttributeUids[$itemIndex],
@@ -286,6 +290,7 @@ QUERY;
      * Test that custom attribute options and labels are returned correctly
      *
      * @magentoApiDataFixture Magento/Catalog/_files/dropdown_attribute.php
+     * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
      */
     public function testCustomAttributeMetadataOptions()
     {

@@ -25,7 +25,7 @@ class ProductAttributes implements ResolverInterface
     private $enumDataMapper;
 
     /**
-     * @param EnumLookup $enumLookup
+     * @param DataMapperInterface $enumDataMapper
      */
     public function __construct(
         DataMapperInterface $enumDataMapper
