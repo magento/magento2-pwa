@@ -7,8 +7,6 @@ declare(strict_types=1);
 
 namespace Magento\EavGraphQlPwa\Model\TypeResolver;
 
-namespace Magento\EavGraphQlPwa\Model\TypeResolver;
-
 use Magento\Framework\GraphQl\Query\Resolver\TypeResolverInterface;
 
 /**
