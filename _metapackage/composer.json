@@ -4,7 +4,8 @@
     "version": "0.0.1",
     "require": {
         "magento/module-contact-graph-ql-pwa": "*",
-        "magento/module-newsletter-graph-ql-pwa": "*"
+        "magento/module-newsletter-graph-ql-pwa": "*",
+        "magento/module-quote-graph-ql-pwa": "*"
     },
     "type": "metapackage"
 }
