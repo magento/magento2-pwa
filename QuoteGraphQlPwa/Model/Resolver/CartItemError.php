@@ -28,7 +28,21 @@ class CartItemError implements ResolverInterface
         }
         /** @var Item $cartItem */
         $cartItem = $value['model'];
+        $hasError = (bool) $cartItem->getData('has_error');
 
-        return (bool) $cartItem->getData('has_error');
+        return [
+            'has_error' => $hasError,
+            'message' => $hasError ? $this->getItemErrors($cartItem) : null
+        ];
+    }
+
+    private function getItemErrors(Item $cartItem): string
+    {
+        $errors = [];
+        foreach ($cartItem->getErrorInfos() as $error) {
+            $errors[] = $error['message'];
+        }
+
+        return implode(' ', $errors);
     }
 }

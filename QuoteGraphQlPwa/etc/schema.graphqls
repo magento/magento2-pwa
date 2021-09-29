@@ -1,5 +1,10 @@
 # Copyright © Magento, Inc. All rights reserved.
 # See COPYING.txt for license details.
 interface CartItemInterface {
-    has_error: Boolean! @resolver(class: "\\Magento\\QuoteGraphQlPwa\\Model\\Resolver\\CartItemError") @doc(description: "Flag to determine if cart item has an error")
+    error: CartItemError! @resolver(class: "\\Magento\\QuoteGraphQlPwa\\Model\\Resolver\\CartItemError") @doc(description: "Item error information")
+}
+
+type CartItemError {
+    has_error: Boolean!
+    message: String
 }
