@@ -3,9 +3,8 @@
     "description": "PWA metapackage",
     "version": "0.0.1",
     "require": {
-        "magento/module-pwa": "*",
-        "magento/module-cms-pwa": "*",
-        "magento/module-pwa-analytics": "*"
+        "magento/module-contact-graph-ql-pwa": "*",
+        "magento/module-newsletter-graph-ql-pwa": "*"
     },
     "type": "metapackage"
 }
