@@ -19,5 +19,5 @@ type ContactUsOutput {
 }
 
 type StoreConfig {
-    contact_enabled : Boolean @doc(description: "Contact Form Enabled Flag")
+    contact_enabled: Boolean! @doc(description: "Contact Form Enabled Flag")
 }
