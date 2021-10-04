@@ -8,10 +8,10 @@ type Mutation {
 }
 
 input ContactUsInput {
-    email: String!
-    name: String!
-    telephone: String
-    comment: String!
+    email: String! @doc(description: "The email address of the shopper.")
+    name: String! @doc(description: "The full name of the shopper.")
+    telephone: String @doc(description: "The shopper's telephone number.")
+    comment: String! @doc(description: "The shopper's comment to the merchant.")
 }
 
 type ContactUsOutput @doc(description: "Contains the status of the request."){
