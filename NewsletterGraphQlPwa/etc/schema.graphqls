@@ -2,5 +2,5 @@
 # See COPYING.txt for license details.
 
 type StoreConfig {
-    newsletter_enabled: Boolean! @doc(description: "Newsletter Enabled Flag")
+    newsletter_enabled: Boolean! @doc(description: "Indicates whether newsletters are enabled.")
 }

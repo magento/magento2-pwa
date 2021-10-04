@@ -3,21 +3,21 @@
 
 type Mutation {
     contactUs(
-        input: ContactUsInput!
-    ): ContactUsOutput @doc(description:"Sends the contact us email with given information") @resolver(class: "Magento\\ContactGraphQlPwa\\Model\\Resolver\\ContactUs")
+        input: ContactUsInput! @doc(description: "An input object that defines shopper information.")
+    ): ContactUsOutput @doc(description: "Send a 'Contact Us' email to the merchant.") @resolver(class: "Magento\\ContactGraphQlPwa\\Model\\Resolver\\ContactUs")
 }
 
 input ContactUsInput {
-    email: String
-    name: String
+    email: String!
+    name: String!
     telephone: String
-    comment: String
+    comment: String!
 }
 
-type ContactUsOutput {
-    status: Boolean! @doc(description: "Returns the status of the contact request")
+type ContactUsOutput @doc(description: "Contains the status of the request."){
+    status: Boolean! @doc(description: "Indicates whether the request was successful.")
 }
 
 type StoreConfig {
-    contact_enabled: Boolean! @doc(description: "Contact Form Enabled Flag")
+    contact_enabled: Boolean! @doc(description: "Indicates whether the Contact Us form in enabled.")
 }
