@@ -18,6 +18,6 @@ type ContactUsOutput {
     status: Boolean! @doc(description: "Returns the status of the contact request")
 }
 
-type StoreConfig @doc(description: "The type contains information about a store config") {
+type StoreConfig {
     contact_enabled : Boolean @doc(description: "Contact Form Enabled Flag")
 }

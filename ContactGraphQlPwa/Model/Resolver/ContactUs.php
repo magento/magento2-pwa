@@ -9,16 +9,18 @@ namespace Magento\ContactGraphQlPwa\Model\Resolver;
 
 use Magento\Contact\Model\ConfigInterface;
 use Magento\Contact\Model\MailInterface;
-use Magento\Framework\App\ObjectManager;
 use Magento\Framework\GraphQl\Config\Element\Field;
 use Magento\Framework\GraphQl\Exception\GraphQlInputException;
 use Magento\Framework\GraphQl\Query\ResolverInterface;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
+use Magento\Framework\Validator\EmailAddress;
 use Psr\Log\LoggerInterface;
 
 class ContactUs implements ResolverInterface
 {
-    public const EMPTY_OPTIONAL_VALUE = '-';
+    public const DEFAULT_VALUES = [
+        'telephone' => '-'
+    ];
 
     /** @var \Magento\Contact\Model\MailInterface */
     private $mail;
@@ -29,19 +31,24 @@ class ContactUs implements ResolverInterface
     /** @var \Psr\Log\LoggerInterface */
     private $logger;
 
+    /** @var \Magento\Framework\Validator\EmailAddress */
+    private $emailValidator;
+
     /**
      * @param \Magento\Contact\Model\MailInterface $mail
      * @param \Magento\Contact\Model\ConfigInterface $contactConfig
-     * @param \Psr\Log\LoggerInterface|null $logger
+     * @param \Psr\Log\LoggerInterface $logger
      */
     public function __construct(
         MailInterface $mail,
         ConfigInterface $contactConfig,
-        LoggerInterface $logger = null
+        LoggerInterface $logger,
+        EmailAddress $emailValidator
     ) {
         $this->mail = $mail;
         $this->contactConfig = $contactConfig;
-        $this->logger = $logger ?: ObjectManager::getInstance()->get(LoggerInterface::class);
+        $this->logger = $logger;
+        $this->emailValidator = $emailValidator;
     }
 
     /**
@@ -60,12 +67,12 @@ class ContactUs implements ResolverInterface
             );
         }
 
-        $input = $this->validatedParams($args['input']);
-        $email = $input['email'];
+        $input = $this->cleanInput($args['input']);
+        $this->validateInput($input);
 
         $variables = ['data' => $input];
         try {
-            $this->mail->send($email, $variables);
+            $this->mail->send($input['email'], $variables);
         } catch (\Exception $e) {
             $this->logger->critical($e);
 
@@ -80,38 +87,59 @@ class ContactUs implements ResolverInterface
     }
 
     /**
-     * Validate and return input data
+     * @return string[]
+     */
+    public function getDefaultValues(): array
+    {
+        return self::DEFAULT_VALUES;
+    }
+
+    /**
+     * Clean input values and set default values
      *
      * @param array<string, string> $input
      *
      * @return array<string, string>
+     */
+    public function cleanInput(array $input): array
+    {
+        $values = [];
+        foreach ($input as $field => $value) {
+            $cleanValue = $value === null ? '' : trim($value);
+
+            $defaults = $this->getDefaultValues();
+            if ($cleanValue === '' && isset($defaults[$field])) {
+                $cleanValue = $defaults[$field];
+            }
+
+            $values[$field] = $cleanValue;
+        }
+
+        return $values;
+    }
+
+    /**
+     * Validate input data
+     *
+     * @param array<string, string> $input
+     *
+     * @return void
      * @throws \Magento\Framework\GraphQl\Exception\GraphQlInputException
      */
-    public function validatedParams(array $input): array
+    public function validateInput(array $input): void
     {
-        $email = isset($input['email']) ? trim($input['email']) : '';
-        if (empty($email) || strpos($email, '@') === false) {
+        if (!$this->emailValidator->isValid($input['email'])) {
             throw new GraphQlInputException(
                 __('The email address is invalid. Verify the email address and try again.')
             );
         }
-        $input['email'] = $email;
 
-        $name = $input['name'] ?? '';
-        if (trim($name) === '') {
+        if ($input['name'] === '') {
             throw new GraphQlInputException(__('Enter the Name and try again.'));
         }
 
-        $comment = $input['comment'] ?? '';
-        if (trim($comment) === '') {
+        if ($input['comment'] === '') {
             throw new GraphQlInputException(__('Enter the comment and try again.'));
         }
-
-        // Base email template requires telephone
-        if (!isset($input['telephone'])) {
-            $input['telephone'] = self::EMPTY_OPTIONAL_VALUE;
-        }
-
-        return $input;
     }
 }
