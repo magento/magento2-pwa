@@ -1,3 +1,3 @@
 # ContactGraphQlPwa
 
-**ContactGraphQlPwa** provides GraphQl support for magento/module-contact
+**ContactGraphQlPwa** provides GraphQL support for `magento/module-contact`.
