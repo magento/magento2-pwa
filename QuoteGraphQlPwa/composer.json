@@ -9,14 +9,13 @@
     "config": {
         "sort-packages": true
     },
-    "version": "100.4.0",
     "require": {
         "php": "~7.3.0||~7.4.0",
-        "magento/framework": "103.0.*",
-        "magento/module-quote-graph-ql": "100.4.*"
+        "magento/framework": "*",
+        "magento/module-quote-graph-ql": "*"
     },
     "suggest": {
-        "magento/module-graph-ql": "100.4.*"
+        "magento/module-graph-ql": "*"
     },
     "autoload": {
         "files": [
