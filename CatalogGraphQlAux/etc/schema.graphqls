@@ -1,0 +1,20 @@
+# Copyright © Magento, Inc. All rights reserved.
+# See COPYING.txt for license details.
+
+type ProductAttributeMetadata implements AttributeMetadataInterface {
+    used_in_components: [CustomAttributesListsEnum!] @resolver(class: "Magento\\CatalogGraphQlAux\\Model\\Resolver\\ProductAttributes") @doc(description: "Places in the store front where the attribute is used.")
+}
+
+enum AttributeEntityTypeEnum {
+    PRODUCT
+}
+
+enum CustomAttributesListsEnum {
+    PRODUCT_DETAILS_PAGE
+    PRODUCTS_LISTING
+    PRODUCTS_COMPARE
+    PRODUCT_SORT
+    PRODUCT_FILTER
+    PRODUCT_SEARCH_RESULTS_FILTER
+    ADVANCED_CATALOG_SEARCH
+}

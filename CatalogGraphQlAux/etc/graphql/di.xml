@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\EavGraphQlAux\Model\TypeResolver\AttributeMetadataInterfaceComposite">
+        <arguments>
+            <argument name="attributeEntityTypeResolvers" xsi:type="array">
+                <item name="catalog_product_type_resolver" xsi:type="object">Magento\CatalogGraphQlAux\Model\TypeResolver\ProductAttributeMetadata</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\GraphQl\Schema\Type\Enum\DefaultDataMapper">
+        <arguments>
+            <argument name="map" xsi:type="array">
+                <item name="AttributeEntityTypeEnum" xsi:type="array">
+                    <item name="product" xsi:type="string">catalog_product</item>
+                </item>
+                <item name="CustomAttributesListsEnum" xsi:type="array">
+                    <item name="product_details_page" xsi:type="string">is_visible_on_front</item>
+                    <item name="products_listing" xsi:type="string">used_in_product_listing</item>
+                    <item name="products_compare" xsi:type="string">is_comparable</item>
+                    <item name="product_sort" xsi:type="string">used_for_sort_by</item>
+                    <item name="product_filter" xsi:type="string">is_filterable</item>
+                    <item name="product_search_results_filter" xsi:type="string">is_filterable_in_search</item>
+                    <item name="advanced_catalog_search" xsi:type="string">is_visible_in_advanced_search</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+</config>

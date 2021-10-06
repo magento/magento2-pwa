@@ -3,7 +3,9 @@
   "description": "PWA metapackage",
   "version": "0.0.1",
   "require": {
-    "magento/module-eav-graph-ql-pwa": "*"
+    "magento/module-eav-graph-ql-aux": "*",
+    "magento/module-catalog-graph-ql-aux": "*",
+    "magento/module-weee-graph-ql-aux": "*"
   },
   "type": "metapackage"
 }
