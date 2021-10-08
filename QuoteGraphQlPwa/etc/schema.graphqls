@@ -2,10 +2,16 @@
 # See COPYING.txt for license details.
 
 interface CartItemInterface {
-    error: CartItemError! @resolver(class: "\\Magento\\QuoteGraphQlPwa\\Model\\Resolver\\CartItemError")
+    errors: [CartItemError] @resolver(class: "\\Magento\\QuoteGraphQlPwa\\Model\\Resolver\\CartItemErrors") @doc(description: "An array of errors encountered while loading the cart item")
 }
 
-type CartItemError @doc(description: "Item error information") {
-    has_error: Boolean! @doc(description: "Indicates whether or not the item has an error")
-    message: String @doc(description: "Details about the item's error")
+type CartItemError {
+    code: CartItemErrorType! @doc(description: "An error code that describes the error encountered")
+    message: String! @doc(description: "A localized error message")
+}
+
+enum CartItemErrorType {
+    UNDEFINED
+    ITEM_QTY
+    ITEM_INCREMENTS
 }
