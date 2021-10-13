@@ -2,7 +2,7 @@
 # See COPYING.txt for license details.
 
 interface CartItemInterface {
-    errors: [CartItemError] @resolver(class: "\\Magento\\QuoteGraphQlPwa\\Model\\Resolver\\CartItemErrors") @doc(description: "An array of errors encountered while loading the cart item")
+    errors: [CartItemError!] @resolver(class: "\\Magento\\QuoteGraphQlPwa\\Model\\Resolver\\CartItemErrors") @doc(description: "An array of errors encountered while loading the cart item")
 }
 
 type CartItemError {
