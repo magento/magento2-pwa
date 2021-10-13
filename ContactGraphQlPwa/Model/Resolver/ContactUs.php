@@ -104,15 +104,21 @@ class ContactUs implements ResolverInterface
     public function cleanInput(array $input): array
     {
         $values = [];
+        $defaults = $this->getDefaultValues();
         foreach ($input as $field => $value) {
             $cleanValue = $value === null ? '' : trim($value);
 
-            $defaults = $this->getDefaultValues();
             if ($cleanValue === '' && isset($defaults[$field])) {
                 $cleanValue = $defaults[$field];
             }
 
             $values[$field] = $cleanValue;
+        }
+
+        foreach ($defaults as $field => $value) {
+            if (!isset($values[$field])) {
+                $values[$field] = $value;
+            }
         }
 
         return $values;
