@@ -43,7 +43,7 @@ git clone git@github.com:magento-commerce/magento2-pwa.git ext/magento/magento2-
 5. Finally, install the extension:
 
 ```
-composer require magento/magento2-pwa
+composer require [module name]
 ```
 
 At this point, the module is symlinked inside the vendor directory, which allows both running a Magento installation with additional modules as well as doing development using the standard git workflow.
