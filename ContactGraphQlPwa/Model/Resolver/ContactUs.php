@@ -38,6 +38,7 @@ class ContactUs implements ResolverInterface
      * @param \Magento\Contact\Model\MailInterface $mail
      * @param \Magento\Contact\Model\ConfigInterface $contactConfig
      * @param \Psr\Log\LoggerInterface $logger
+     * @param \Magento\Framework\Validator\EmailAddress $emailValidator
      */
     public function __construct(
         MailInterface $mail,
@@ -56,7 +57,7 @@ class ContactUs implements ResolverInterface
      */
     public function resolve(
         Field $field,
-              $context,
+        $context,
         ResolveInfo $info,
         array $value = null,
         array $args = null
@@ -87,6 +88,8 @@ class ContactUs implements ResolverInterface
     }
 
     /**
+     * Get default values map
+     *
      * @return string[]
      */
     public function getDefaultValues(): array
