@@ -7,7 +7,6 @@ declare(strict_types=1);
 
 namespace Magento\QuoteGraphQlPwa\Model\Resolver;
 
-use Magento\CatalogInventory\Helper\Data as InventoryHelper;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\GraphQl\Config\Element\Field;
 use Magento\Framework\GraphQl\Query\ResolverInterface;
@@ -49,6 +48,8 @@ class CartItemErrors implements ResolverInterface
     }
 
     /**
+     * Get error messages for cart item
+     *
      * @param \Magento\Quote\Model\Quote\Item $cartItem
      *
      * @return string[]|null
