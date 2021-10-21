@@ -41,17 +41,17 @@ This module is for additional extensions in core Magento to work with PWA Studio
         composer config repositories.ext path "./ext/*/*/*"
         ```
 
-1. Finally, install your extension module:
+1. Finally, install the `pwa` metapackage:
 
     ```bash
-    composer require [module name]
+    composer require magento/pwa-studio
     ```
 
-At this point, the module is symlinked inside the vendor directory, which allows both running a Magento installation with additional modules as well as doing development using the standard git workflow.
+At this point, all the `pwa` modules are symlinked inside the vendor directory, which allows both running a Magento installation with additional modules as well as doing development using the standard git workflow.
 
-You may need to ensure that Magento2-pwa\* modules is listed as enabled when you run bin/magento module:status. If they are, [follow the docs on how to enable modules](https://devdocs.magento.com/guides/v2.3/extension-dev-guide/build/enable-module.html).
+You may need to ensure that there are no Magento_PWA* modules listed as `enabled` when you run `bin/magento module:status`. If they are, [follow the docs on how to enable modules](https://devdocs.magento.com/guides/v2.3/extension-dev-guide/build/enable-module.html).
 
-### Setting up Git workflow
+### Setting up the Git workflow
 
 To improve the developer experience when working with this repository structure, a few additional items may be configured:
 
