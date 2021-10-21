@@ -33,7 +33,7 @@ This module is for additional extensions in core Magento to work with PWA Studio
         composer config minimum-stability dev
         ```
 
-    - To work with `stable` packages, ensure that the `prefer-stable` property is `true`. This property should already be included in the `composer.json` file, right above the `minimum-stability` setting.
+    -  To work with `stable` packages, ensure that the `prefer-stable` property is `true`. This property should already be included in the `composer.json` file, right above the `minimum-stability` setting.
 
     -  Configure `composer` so that it knows where to find new modules. The following command will configure any extension code inside the ext directory to be treated as a package and symlinked to the vendor directory:
 
@@ -41,7 +41,7 @@ This module is for additional extensions in core Magento to work with PWA Studio
         composer config repositories.ext path "./ext/*/*/*"
         ```
 
-1. Finally, install the `pwa` metapackage:
+1. Install the `pwa` metapackage:
 
     ```bash
     composer require magento/pwa-studio
@@ -53,22 +53,22 @@ You may need to ensure that there are no Magento_PWA* modules listed as `enabled
 
 ### Setting up the Git workflow
 
-To improve the developer experience when working with this repository structure, a few additional items may be configured:
+To improve the developer experience even further, you can add these configurations as well:
 
-1. Exclude `ext/` directories in the project's `.git` directory:
+1. Exclude all the `ext/` directories in the project's `.git` configuration:
 
     ```bash
     echo ext >> ./.git/info/exclude
     ```
 
-1. Skip root directory `composer.\*` files to avoid committing them by mistake:
+1. Skip your project's root directory `composer.\*` files to avoid committing them by mistake:
 
     ```bash
     git update-index --skip-worktree composer.json
     git update-index --skip-worktree composer.lock
     ```
 
-    You can reverse this operation as needed:
+    NOTE: You can reverse this operation anytime as needed:
 
     ```bash
     git update-index --no-skip-worktree composer.json
