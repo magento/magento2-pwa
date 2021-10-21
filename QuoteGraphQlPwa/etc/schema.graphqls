@@ -1,0 +1,17 @@
+# Copyright © Magento, Inc. All rights reserved.
+# See COPYING.txt for license details.
+
+interface CartItemInterface {
+    errors: [CartItemError!] @resolver(class: "\\Magento\\QuoteGraphQlPwa\\Model\\Resolver\\CartItemErrors") @doc(description: "An array of errors encountered while loading the cart item")
+}
+
+type CartItemError {
+    code: CartItemErrorType! @doc(description: "An error code that describes the error encountered")
+    message: String! @doc(description: "A localized error message")
+}
+
+enum CartItemErrorType {
+    UNDEFINED
+    ITEM_QTY
+    ITEM_INCREMENTS
+}
