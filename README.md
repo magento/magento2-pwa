@@ -1,8 +1,21 @@
-# Overview
+# PWA Metapackage for Magento Open Source Extensions
 
-This module is for additional extensions in core Magento to work with PWA Studio. To provide the ability to develop the project locally, we introduced a development workflow that can help external developers work with the project.
+Welcome to PWA metapackage for Magento Open Source extensions. 
+As a metapackage for Magento Open Source, this repo enables PWA extension developers to add any additional Magento Open Source features they need to support their PWA modules. 
+
+## Current Modules
+
+### [Magento_ContactGraphQlPwa (magento/module-contact-graph-ql-pwa)](ContactGraphQlPwa/README.md)
+
+Provides GraphQl functionality for the contact-us form.
+
+### [Magento_NewsletterGraphQlPwa (magento/module-newsletter-graph-ql-pwa)](NewsletterGraphQlPwa/README.md)
+
+Provides additional GraphQl functionality for the newsletter subscriptions in PWA.
 
 ## Development setup
+
+To setup and develop your PWA extension modules locally, use the following instructions:
 
 ### Installation as a git-based composer package
 
