@@ -57,7 +57,7 @@ To setup and develop your PWA extension modules locally, use the following instr
 1. Install the `pwa` metapackage:
 
     ```bash
-    composer require magento/pwa-studio
+    composer require magento/pwa
     ```
 
 At this point, all the `pwa` modules are symlinked inside the vendor directory, which allows both running a Magento installation with additional modules as well as doing development using the standard git workflow.
