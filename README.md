@@ -1,50 +1,51 @@
 # Overview
 
-This module is for additional extension in core Magento to work with PWA Studio. To provide the ability to develop the project locally we introduced a development workflow that can help external developers work with the project.
+This module is for additional extensions in core Magento to work with PWA Studio. To provide the ability to develop the project locally, we introduced a development workflow that can help external developers work with the project.
 
-#Development setup
+## Development setup
 
-## Installation as a git-based composer package
+### Installation as a git-based composer package
 
-1. Go to your magento2 git repository and check out the latest develop branch, e.g. 2.4-develop. You may also check out and use any 2.4 release tags.
+1. Clone and/or navigate to your [`magento2` git repository](https://github.com/magento/magento2) and check out the latest develop branch, e.g. `2.4-develop`. You may also check out and use any `2.4` release tags.
 
-```
-cd magento2
-```
+    ```bash
+    git clone git@github.com:magento/magento2.git
+    cd magento2
+    ```
 
-2. Create an ext directory in the root of the magento2 project directory:
+1. Create an `ext` directory within the root of your `magento2` project:
 
-```
-mkdir ext
-```
+    ```bash
+    mkdir ext
+    ```
 
-3. Clone the magento2-pwa repository into the appropriate directory inside ext:
+1. Clone the `magento2-pwa` repository into you vendor directory name:
 
-```
-git clone git@github.com:magento-commerce/magento2-pwa.git ext/magento/magento2-pwa
+    ```bash
+    git clone git@github.com:magento-commerce/magento2-pwa.git ext/magento/magento2-pwa
+    ```
 
-```
+1. Update the `magento2/composer.json` settings to create a better development workflow for your extension modules:
 
-4. Update Composer settings for the project to allow a better development workflow:
+    -  Update the `minimum-stability` for packages to `dev`. This allows for the installation of development modules:
 
-- minimum-stability for packages is updated to dev value. This allows installation of development modules:
+        ```bash
+        composer config minimum-stability dev
+        ```
 
-```
-  composer config minimum-stability dev
-```
+    - To work with `stable` packages, ensure that the `prefer-stable` property is `true`. This property should already be included in the `composer.json` file, right above the `minimum-stability` setting.
 
-- To be able to work with stable packages enable the prefer-stable property: prefer-stable: true. It should be included right above the minimum-stability setting.
-- Next we configure Composer so that it knows where to find new modules. The following command will configure any extension code inside the ext directory to be treated as a package and symlinked to the vendor directory:
+    -  Configure `composer` so that it knows where to find new modules. The following command will configure any extension code inside the ext directory to be treated as a package and symlinked to the vendor directory:
 
-```
-  composer config repositories.ext path "./ext/*/*/*"
-```
+        ```bash
+        composer config repositories.ext path "./ext/*/*/*"
+        ```
 
-5. Finally, install the extension:
+1. Finally, install your extension module:
 
-```
-composer require [module name]
-```
+    ```bash
+    composer require [module name]
+    ```
 
 At this point, the module is symlinked inside the vendor directory, which allows both running a Magento installation with additional modules as well as doing development using the standard git workflow.
 
@@ -52,48 +53,51 @@ You may need to ensure that Magento2-pwa\* modules is listed as enabled when you
 
 ### Setting up Git workflow
 
-In order to improve the developer experience when working with this repository structure, a few additional items may be configured:
+To improve the developer experience when working with this repository structure, a few additional items may be configured:
 
-1. Exclude ext directories from root directory Git:
+1. Exclude `ext/` directories in the project's `.git` directory:
 
-```
-echo ext >> ./.git/info/exclude
-```
+    ```bash
+    echo ext >> ./.git/info/exclude
+    ```
 
-2. Skip root directory composer.\* files to avoid committing them by mistake:
+1. Skip root directory `composer.\*` files to avoid committing them by mistake:
 
-```
-git update-index --skip-worktree composer.json
-git update-index --skip-worktree composer.lock
-```
+    ```bash
+    git update-index --skip-worktree composer.json
+    git update-index --skip-worktree composer.lock
+    ```
 
-This operation is reversible, if needed:
+    You can reverse this operation as needed:
 
-```
-git update-index --no-skip-worktree composer.json
-git update-index --no-skip-worktree composer.lock
-```
+    ```bash
+    git update-index --no-skip-worktree composer.json
+    git update-index --no-skip-worktree composer.lock
+    ```
 
 ## Cloud deployment extension installation
 
-1. Add https://repo.magento.com as a composer repository by adding the following to your cloud instances composer.json file
-```json 
-"repositories": {
-    "repo": {
-        "type": "composer",
-        "url": "https://repo.magento.com"
-    }
-},
-```
-2. Require in magento/magento2-pwa extension by adding the following to your cloud instances composer.json file
-```json 
-"require": {
+1. Add https://repo.magento.com as a composer repository by adding the following to your cloud instances `composer.json` file.
+
+    ```json
+    "repositories": {
+        "repo": {
+            "type": "composer",
+            "url": "https://repo.magento.com"
+        }
+    },
+    ```
+
+1. Require in `magento/magento2-pwa` extension by adding the following to your cloud instances `composer.json` file.
+
+    ```json
+    "require": {
         "magento/magento2-pwa": "0.0.1"
     },
-```
+    ```
 
-3. Ensure your auth.json file has valid credential for repo.magento.com.
+1. Ensure your `auth.json` file has valid credential for `repo.magento.com`.
 
-4. Run `composer update` to update your composer.lock file
+1. Run `composer update` to update your `composer.lock` file.
 
-5. Push the changes and deploy your instance.
+1. Push the changes and deploy your cloud instance.
