@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\EavGraphQlAux\Model\TypeResolver\AttributeMetadataInterfaceComposite" />
+    <type name="Magento\EavGraphQlAux\Model\TypeResolver\UiInputComposite">
+        <arguments>
+            <argument name="uiInputTypeResolvers" xsi:type="array">
+                <item name="ui_select_type_resolver" xsi:type="object">Magento\EavGraphQlAux\Model\TypeResolver\UiAttributeTypeSelect</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\EavGraphQlAux\Model\TypeResolver\AttributeOptionComposite">
+        <arguments>
+            <argument name="AttributeOptionsTypeResolvers" xsi:type="array">
+                <item name="ui_select_type_resolver" xsi:type="object">Magento\EavGraphQlAux\Model\TypeResolver\UiAttributeTypeSelect</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\GraphQl\Schema\Type\Enum\DefaultDataMapper">
+        <arguments>
+            <argument name="map" xsi:type="array">
+                <item name="ObjectDataTypeEnum" xsi:type="array">
+                    <item name="string" xsi:type="string">string</item>
+                    <item name="float" xsi:type="string">float</item>
+                    <item name="int" xsi:type="string">int</item>
+                    <item name="boolean" xsi:type="string">boolean</item>
+                    <item name="complex" xsi:type="string">complex</item>
+                </item>
+                <item name="UiInputTypeEnum" xsi:type="array">
+                    <item name="boolean" xsi:type="string">boolean</item>
+                    <item name="date" xsi:type="string">date</item>
+                    <item name="datetime" xsi:type="string">datetime</item>
+                    <item name="file" xsi:type="string">file</item>
+                    <item name="gallery" xsi:type="string">gallery</item>
+                    <item name="hidden" xsi:type="string">hidden</item>
+                    <item name="image" xsi:type="string">image</item>
+                    <item name="media_image" xsi:type="string">media_image</item>
+                    <item name="multiselect" xsi:type="string">multiselect</item>
+                    <item name="price" xsi:type="string">price</item>
+                    <item name="select" xsi:type="string">select</item>
+                    <item name="swatch_text" xsi:type="string">swatch_text</item>
+                    <item name="swatch_visual" xsi:type="string">swatch_visual</item>
+                    <item name="text" xsi:type="string">text</item>
+                    <item name="textarea" xsi:type="string">textarea</item>
+                    <item name="weight" xsi:type="string">weight</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+</config>
