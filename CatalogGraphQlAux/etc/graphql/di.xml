@@ -13,6 +13,18 @@
             </argument>
         </arguments>
     </type>
+    <type name="Magento\CatalogGraphQl\Model\Resolver\Products\Query\FieldSelection">
+        <plugin name="custom-attributes-fields" type="Magento\CatalogGraphQlAux\Plugin\Query\FieldSelection"/>
+    </type>
+    <type name="Magento\CatalogGraphQlAux\Model\Resolver\CustomAttributes">
+        <arguments>
+            <argument name="selectableTypes" xsi:type="array">
+                <item name="select" xsi:type="string">SELECT</item>
+                <item name="multiselect" xsi:type="string">MULTISELECT</item>
+                <item name="boolean" xsi:type="string">BOOLEAN</item>
+            </argument>
+        </arguments>
+    </type>
     <type name="Magento\Framework\GraphQl\Schema\Type\Enum\DefaultDataMapper">
         <arguments>
             <argument name="map" xsi:type="array">

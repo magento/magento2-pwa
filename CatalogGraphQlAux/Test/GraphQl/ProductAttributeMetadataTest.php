@@ -330,7 +330,7 @@ QUERY;
 
         /** @var Config $eavConfig */
         $eavConfig = $this->objectManager->get(Config::class);
-        $attribute = $eavConfig->getAttribute('catalog_product', 'dropdown_attribute');
+        $attribute = $eavConfig->getAttribute(\Magento\Catalog\Model\Product::ENTITY, 'dropdown_attribute');
 
         // Add frontend label to dropdown_attribute:
         $frontendLabelAttribute = $this->objectManager->get(FrontendLabel::class);
@@ -339,7 +339,6 @@ QUERY;
         $frontendLabels = $attribute->getFrontendLabels();
         $frontendLabels[] = $frontendLabelAttribute;
         $attribute->setFrontendLabels($frontendLabels);
-        $attributeRepository->save($attribute);
 
         /** @var AttributeOptionInterface[] $options */
         $options = $attribute->getOptions();
@@ -348,7 +347,11 @@ QUERY;
         // phpcs:ignore Generic.CodeAnalysis.ForLoopWithTestFunctionCall
         for ($i = 0; $i < count($options); $i++) {
             $optionValues[] = $options[$i]->getValue();
+            if ($i === 1) {
+                $attribute->setDefaultValue($options[$i]->getValue());
+            }
         }
+        $attributeRepository->save($attribute);
 
         $query
             = <<<QUERY
@@ -370,6 +373,7 @@ QUERY;
             __typename
             uid
             label
+            is_default
           }
         }
       }
@@ -384,17 +388,20 @@ QUERY;
                 [
                     '__typename' => 'AttributeOption',
                     'uid' => $this->uid->encode('catalog_product/dropdown_attribute/' . $optionValues[0]),
-                    'label' => 'Option 1'
+                    'label' => 'Option 1',
+                    'is_default' => false
                 ],
                 [
                     '__typename' => 'AttributeOption',
                     'uid' => $this->uid->encode('catalog_product/dropdown_attribute/' . $optionValues[1]),
-                    'label' => 'Option 2'
+                    'label' => 'Option 2',
+                    'is_default' => true
                 ],
                 [
                     '__typename' => 'AttributeOption',
                     'uid' => $this->uid->encode('catalog_product/dropdown_attribute/' . $optionValues[2]),
-                    'label' => 'Option 3'
+                    'label' => 'Option 3',
+                    'is_default' => false
                 ]
             ]
         ];

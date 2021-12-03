@@ -11,6 +11,8 @@
         <arguments>
             <argument name="uiInputTypeResolvers" xsi:type="array">
                 <item name="ui_select_type_resolver" xsi:type="object">Magento\EavGraphQlAux\Model\TypeResolver\UiAttributeTypeSelect</item>
+                <item name="ui_multiselect_type_resolver" xsi:type="object">Magento\EavGraphQlAux\Model\TypeResolver\UiAttributeTypeMultiSelect</item>
+                <item name="ui_boolean_type_resolver" xsi:type="object">Magento\EavGraphQlAux\Model\TypeResolver\UiAttributeTypeBoolean</item>
             </argument>
         </arguments>
     </type>

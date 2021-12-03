@@ -13,6 +13,7 @@ use Magento\Framework\GraphQl\Query\Uid;
 use Magento\Framework\Webapi\ServiceTypeToEntityTypeMap;
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\Api\FilterBuilder;
+use Magento\Framework\GraphQl\Exception\GraphQlInputException;
 
 /**
  * Get frontend input type for EAV attribute
@@ -79,7 +80,11 @@ class Attributes
 
         if (!empty($attributeUids)) {
             $codes = array_map(function ($value) {
-                return explode('/', $this->uidEncoder->decode($value))[1];
+                try {
+                    return explode('/', $this->uidEncoder->decode($value))[1];
+                } catch (\Exception $e) {
+                    throw new GraphQlInputException(__('Value of uid "%1" is incorrect.', $value));
+                }
             }, $attributeUids);
 
             $this->searchCriteriaBuilder->addFilters(
@@ -111,8 +116,8 @@ class Attributes
         try {
             $criteria = $this->searchCriteriaBuilder->create();
             $attributes = $this->attributeRepository->getList($entityType, $criteria)->getItems();
-        } catch (NoSuchEntityException $e) {
-            return null;
+        } catch (\Exception $e) {
+            throw new GraphQlInputException(__($e->getMessage()));
         }
         return $attributes;
     }

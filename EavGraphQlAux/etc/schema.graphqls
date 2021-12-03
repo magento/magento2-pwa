@@ -43,6 +43,7 @@ interface SelectableInputTypeInterface @typeResolver(class: "Magento\\EavGraphQl
 interface AttributeOptionInterface @typeResolver(class: "Magento\\EavGraphQlAux\\Model\\TypeResolver\\AttributeOptionTypeInterface") @doc(description: "Defines attribute options.") {
     uid: ID! @doc(description: "The unique ID of an attribute option.")
     label: String @doc(description: "The label assigned to the attribute option.")
+    is_default: Boolean @doc(description: "Indicates if option is set to be used as default value.")
 }
 
 type AttributeOptions implements AttributeOptionsInterface {
@@ -52,6 +53,12 @@ type AttributeOption implements AttributeOptionInterface {
 }
 
 type UiAttributeTypeSelect implements UiInputTypeInterface, AttributeOptionsInterface, SelectableInputTypeInterface {
+}
+
+type UiAttributeTypeMultiSelect implements UiInputTypeInterface, AttributeOptionsInterface, SelectableInputTypeInterface {
+}
+
+type UiAttributeTypeBoolean implements UiInputTypeInterface, AttributeOptionsInterface, SelectableInputTypeInterface {
 }
 
 type UiAttributeTypeAny implements UiInputTypeInterface {
@@ -86,4 +93,18 @@ enum UiInputTypeEnum {
     TEXT
     TEXTAREA
     WEIGHT
+}
+
+type CustomAttribute @doc(description: "Contains custom attribute value and metadata details.") {
+    selected_attribute_options: SelectedAttributeOption @doc(description: "Attribute value represented as selected options using input type like select.")
+    entered_attribute_value: EnteredAttributeValue @doc(description: "Attribute value represented as entered data using input type like text field.")
+    attribute_metadata: AttributeMetadataInterface @doc(description: "Attribute metadata details.")
+}
+
+type SelectedAttributeOption {
+    attribute_option: [AttributeOptionInterface!] @doc(description: "Selected attribute option details.")
+}
+
+type EnteredAttributeValue {
+    value: String @doc(description: "Attribute value.")
 }

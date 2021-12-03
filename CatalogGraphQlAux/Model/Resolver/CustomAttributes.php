@@ -1,0 +1,167 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+declare(strict_types=1);
+
+namespace Magento\CatalogGraphQlAux\Model\Resolver;
+
+use Magento\Catalog\Model\Product;
+use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\GraphQl\Config\Element\Field;
+use Magento\Framework\GraphQl\Query\ResolverInterface;
+use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
+use Magento\EavGraphQlAux\Model\Resolver\Query\Attributes;
+use Magento\Framework\GraphQl\Query\Uid;
+use Magento\EavGraphQlAux\Model\Resolver\DataProvider\AttributeMetadata;
+use Magento\EavGraphQlAux\Model\Resolver\DataProvider\AttributeOptions;
+use Magento\Eav\Api\Data\AttributeInterface;
+
+/**
+ * @inheritdoc
+ */
+class CustomAttributes implements ResolverInterface
+{
+    /**
+     * @var string[]
+     */
+    private array $selectableTypes;
+
+    /**
+     * @var Uid
+     */
+    private $uidEncoder;
+
+    /**
+     * @var Attributes
+     */
+    private $attributes;
+
+    /**
+     * @var AttributeMetadata
+     */
+    private $metadataProvider;
+
+    /**
+     * @var AttributeOptions
+     */
+    private $attributeOptions;
+
+    /**
+     * @param Uid $uidEncoder
+     * @param Attributes $attributes
+     * @param AttributeMetadata $metadataProvider
+     * @param AttributeOptions $attributeOptions
+     * @param array|null $selectableTypes
+     */
+    public function __construct(
+        Uid $uidEncoder,
+        Attributes $attributes,
+        AttributeMetadata $metadataProvider,
+        AttributeOptions $attributeOptions,
+        array $selectableTypes
+    ) {
+        $this->uidEncoder = $uidEncoder;
+        $this->attributes = $attributes;
+        $this->metadataProvider = $metadataProvider;
+        $this->attributeOptions = $attributeOptions;
+        $this->selectableTypes = $selectableTypes ?? ['SELECT'];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function resolve(
+        Field $field,
+        $context,
+        ResolveInfo $info,
+        array $value = null,
+        array $args = null
+    ) {
+        if (!isset($value['model'])) {
+            throw new LocalizedException(__('"model" value should be specified'));
+        }
+
+        /** @var Product $product */
+        $product = $value['model'];
+        $attributesValuesByUid = $this->mapValuesToUid($product->getCustomAttributes());
+        $attributes = $this->attributes->getAttributes(Product::ENTITY, array_keys($attributesValuesByUid));
+
+        $items = [];
+        foreach ($attributes as $attribute) {
+            $attributeData['attribute_metadata'] = $this->metadataProvider->getAttributeMetadata(
+                $attribute,
+                Product::ENTITY
+            );
+            $attributeValue = $attributesValuesByUid[$attributeData['attribute_metadata']['uid']];
+            $attributeInputType = $attributeData['attribute_metadata']['ui_input']['ui_input_type'] ?? null;
+
+            if ($attributeInputType && $this->isSelectable((string) $attributeInputType)) {
+                $attributeData['selected_attribute_options'] = [
+                   'attribute_option' => $this->getSelectedOptions($attribute, (string) $attributeValue)
+                ];
+            } else {
+                $attributeData['entered_attribute_value'] = [
+                    'value' => $attributeValue
+                ];
+            }
+
+            $items[] = $attributeData;
+        }
+
+        return $items;
+    }
+
+    /**
+     * Associate attributes values with UIDs
+     *
+     * @param array $customAttributes
+     * @return array
+     */
+    private function mapValuesToUid(array $customAttributes): array
+    {
+        $customAttributesValuesByUid = [];
+        foreach ($customAttributes as $customAttribute) {
+            $customAttributesValuesByUid[
+                $this->uidEncoder->encode(Product::ENTITY . '/' . $customAttribute->getAttributeCode())
+            ] = $customAttribute->getValue();
+        }
+        return $customAttributesValuesByUid;
+    }
+
+    /**
+     * Get selected option details
+     *
+     * @param AttributeInterface $attribute
+     * @param string $attributeValue
+     * @return array
+     * @throws LocalizedException
+     */
+    private function getSelectedOptions(
+        AttributeInterface $attribute,
+        string $attributeValue
+    ): array {
+        $selectedOptionValues = explode(',', $attributeValue);
+
+        $selectedOptions = [];
+        foreach ($this->attributeOptions->getAttributeOptions($attribute) as $option) {
+            if (in_array($option['value'], $selectedOptionValues)) {
+                $selectedOptions[] = $option;
+            }
+        }
+
+        return $selectedOptions;
+    }
+
+    /**
+     * Check if attribute value is selected
+     *
+     * @param string $uiInputType
+     * @return bool
+     */
+    private function isSelectable(string $uiInputType): bool
+    {
+        return in_array($uiInputType, $this->selectableTypes);
+    }
+}

@@ -16,6 +16,7 @@ use Magento\Framework\GraphQl\Query\ResolverInterface;
 use Magento\Framework\GraphQl\Query\Uid;
 use Magento\Framework\GraphQl\Query\EnumLookup;
 use Magento\EavGraphQl\Model\Resolver\Query\Type;
+use Magento\EavGraphQlAux\Model\Resolver\DataProvider\AttributeMetadata as MetadataProvider;
 
 /**
  * @inheritdoc
@@ -28,6 +29,11 @@ class AttributesMetadata implements ResolverInterface
      * @var Attributes
      */
     private $attributes;
+
+    /**
+     * @var MetadataProvider
+     */
+    private $metadataProvider;
 
     /**
      * @var DataMapperInterface
@@ -53,19 +59,22 @@ class AttributesMetadata implements ResolverInterface
      * @param Uid $uidEncoder
      * @param EnumLookup $enumLookup
      * @param Type $type
+     * @param MetadataProvider $metadataProvider
      */
     public function __construct(
         Attributes $attributes,
         DataMapperInterface $enumDataMapper,
         Uid $uidEncoder,
         EnumLookup $enumLookup,
-        Type $type
+        Type $type,
+        MetadataProvider $metadataProvider
     ) {
         $this->attributes = $attributes;
         $this->enumDataMapper = $enumDataMapper;
         $this->uidEncoder = $uidEncoder;
         $this->enumLookup = $enumLookup;
         $this->type = $type;
+        $this->metadataProvider = $metadataProvider;
     }
 
     /**
@@ -93,39 +102,7 @@ class AttributesMetadata implements ResolverInterface
         );
 
         foreach ($attributes as $attribute) {
-            if (!$attribute->getFrontendInput()) {
-                continue;
-            }
-            $attributeType = $this->type->getType(
-                $attribute->getAttributeCode(),
-                $attribute->getEntityType()->getEntityTypeCode()
-            );
-            $dataType = $this->enumLookup->getEnumValueFromField('ObjectDataTypeEnum', $attributeType);
-
-            $items[] = [
-                'uid' => $this->uidEncoder->encode('catalog_product' . '/' . $attribute->getAttributeCode()),
-                'code' => $attribute->getAttributeCode(),
-                'label' => $attribute->getFrontendLabel(),
-                'attribute_labels' => $attribute->getFrontendLabels(),
-                'data_type' => $dataType !== '' ? $dataType : self::COMPLEX_DATA_TYPE,
-                'sort_order' => $attribute->getPosition(),
-                'is_system' => !$attribute->getIsUserDefined(),
-                'entity_type' => $this->enumLookup->getEnumValueFromField(
-                    'AttributeEntityTypeEnum',
-                    $attribute->getEntityType()->getEntityTypeCode()
-                ),
-                'ui_input' => [
-                    'ui_input_type' => $this->enumLookup->getEnumValueFromField(
-                        'UiInputTypeEnum',
-                        $attribute->getFrontendInput()
-                    ),
-                    'is_html_allowed' => $attribute->getIsHtmlAllowedOnFront(),
-                    'attribute_options' => $attribute->getOptions(),
-                    'attribute' => $attribute
-                ],
-                'entity_type_code' => $attribute->getEntityType()->getEntityTypeCode(),
-                'attribute' => $attribute
-            ];
+            $items[] = $this->metadataProvider->getAttributeMetadata($attribute, $entityType);
         }
         return [
             'items' => $items
