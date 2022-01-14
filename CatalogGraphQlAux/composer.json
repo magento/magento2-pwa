@@ -8,7 +8,8 @@
         "magento/module-catalog": "*",
         "magento/module-catalog-graph-ql": "*",
         "magento/module-eav": "*",
-        "magento/module-eav-graph-ql-aux": "*"
+        "magento/module-eav-graph-ql-aux": "*",
+        "magento/module-store": "*"
     },
     "license": [
         "OSL-3.0",

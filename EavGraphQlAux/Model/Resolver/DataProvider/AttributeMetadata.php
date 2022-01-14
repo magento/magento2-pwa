@@ -18,7 +18,10 @@ use Magento\Eav\Api\Data\AttributeInterface;
  */
 class AttributeMetadata
 {
-    const COMPLEX_DATA_TYPE = 'COMPLEX';
+    /**
+     * Complex Data Type
+     */
+    private const COMPLEX_DATA_TYPE = 'COMPLEX';
 
     /** @var Uid */
     private $uidEncoder;
@@ -52,12 +55,13 @@ class AttributeMetadata
      * Get attribute metadata details
      *
      * @param AttributeInterface $attribute
+     * @param int $storeId
      * @param string $entityType
      * @return array|void
      * @throws GraphQlInputException
      * @throws \Magento\Framework\Exception\RuntimeException
      */
-    public function getAttributeMetadata(AttributeInterface $attribute, string $entityType)
+    public function getAttributeMetadata(AttributeInterface $attribute, int $storeId, string $entityType)
     {
         if (!$attribute->getFrontendInput()) {
             return;
@@ -72,11 +76,12 @@ class AttributeMetadata
         return [
             'uid' => $this->uidEncoder->encode($entityType . '/' . $attribute->getAttributeCode()),
             'code' => $attribute->getAttributeCode(),
-            'label' => $attribute->getFrontendLabel(),
+            'label' => $attribute->getStoreLabel($storeId),
             'attribute_labels' => $attribute->getFrontendLabels(),
             'data_type' => $dataType !== '' ? $dataType : self::COMPLEX_DATA_TYPE,
             'sort_order' => $attribute->getPosition(),
             'is_system' => !$attribute->getIsUserDefined(),
+            'is_visible_on_front' => $attribute->getIsVisibleOnFront(),
             'entity_type' => $this->enumLookup->getEnumValueFromField(
                 'AttributeEntityTypeEnum',
                 $attribute->getEntityType()->getEntityTypeCode()

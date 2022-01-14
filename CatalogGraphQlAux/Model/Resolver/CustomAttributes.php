@@ -17,6 +17,7 @@ use Magento\Framework\GraphQl\Query\Uid;
 use Magento\EavGraphQlAux\Model\Resolver\DataProvider\AttributeMetadata;
 use Magento\EavGraphQlAux\Model\Resolver\DataProvider\AttributeOptions;
 use Magento\Eav\Api\Data\AttributeInterface;
+use Magento\Store\Api\Data\StoreInterface;
 
 /**
  * @inheritdoc
@@ -60,7 +61,7 @@ class CustomAttributes implements ResolverInterface
         Attributes $attributes,
         AttributeMetadata $metadataProvider,
         AttributeOptions $attributeOptions,
-        array $selectableTypes
+        array $selectableTypes = null
     ) {
         $this->uidEncoder = $uidEncoder;
         $this->attributes = $attributes;
@@ -83,6 +84,10 @@ class CustomAttributes implements ResolverInterface
             throw new LocalizedException(__('"model" value should be specified'));
         }
 
+        /** @var StoreInterface $store */
+        $store = $context->getExtensionAttributes()->getStore();
+        $storeId = (int)$store->getId();
+
         /** @var Product $product */
         $product = $value['model'];
         $attributesValuesByUid = $this->mapValuesToUid($product->getCustomAttributes());
@@ -92,12 +97,14 @@ class CustomAttributes implements ResolverInterface
         foreach ($attributes as $attribute) {
             $attributeData['attribute_metadata'] = $this->metadataProvider->getAttributeMetadata(
                 $attribute,
+                $storeId,
                 Product::ENTITY
             );
             $attributeValue = $attributesValuesByUid[$attributeData['attribute_metadata']['uid']];
             $attributeInputType = $attributeData['attribute_metadata']['ui_input']['ui_input_type'] ?? null;
 
             if ($attributeInputType && $this->isSelectable((string) $attributeInputType)) {
+                $attributeData['entered_attribute_value'] = [];
                 $attributeData['selected_attribute_options'] = [
                    'attribute_option' => $this->getSelectedOptions($attribute, (string) $attributeValue)
                 ];
@@ -105,10 +112,27 @@ class CustomAttributes implements ResolverInterface
                 $attributeData['entered_attribute_value'] = [
                     'value' => $attributeValue
                 ];
+                $attributeData['selected_attribute_options'] = [];
             }
 
             $items[] = $attributeData;
         }
+
+        usort($items, function (array $a, array $b) {
+            $aPosition = $a['attribute_metadata']['sort_order'];
+            $bPosition = $b['attribute_metadata']['sort_order'];
+
+            // Sort alphabetically if same position
+            if ($aPosition === $bPosition) {
+                return strcmp(
+                    $a['attribute_metadata']['label'],
+                    $b['attribute_metadata']['label']
+                );
+            }
+
+            // Sort by position
+            return $aPosition <=> $bPosition;
+        });
 
         return $items;
     }
