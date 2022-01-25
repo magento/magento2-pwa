@@ -1,6 +1,6 @@
 {
     "name": "magento/module-re-captcha-pwa",
-    "description": "Adds warnings to Magento ReCaptcha modules.",
+    "description": "Adds warnings and config validation to Magento ReCaptcha modules.",
     "type": "magento2-module",
     "license": [
         "OSL-3.0",
@@ -11,10 +11,13 @@
     },
     "require": {
         "php": "~7.3.0||~7.4.0",
-        "magento/framework": "*"
-    },
-    "suggest": {
-        "magento/security-package": "*"
+        "magento/framework": "*",
+        "magento/module-config": "*",
+        "magento/module-customer-graph-ql": "*",
+        "magento/module-re-captcha-customer": "*",
+        "magento/module-re-captcha-ui": "*",
+        "magento/module-re-captcha-validation-api": "*",
+        "magento/module-re-captcha-webapi-api": "*"
     },
     "autoload": {
         "files": [
@@ -25,4 +28,3 @@
         }
     }
 }
-
