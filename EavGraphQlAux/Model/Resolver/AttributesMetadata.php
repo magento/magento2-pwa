@@ -17,6 +17,7 @@ use Magento\Framework\GraphQl\Query\Uid;
 use Magento\Framework\GraphQl\Query\EnumLookup;
 use Magento\EavGraphQl\Model\Resolver\Query\Type;
 use Magento\EavGraphQlAux\Model\Resolver\DataProvider\AttributeMetadata as MetadataProvider;
+use Magento\Store\Api\Data\StoreInterface;
 
 /**
  * @inheritdoc
@@ -92,6 +93,10 @@ class AttributesMetadata implements ResolverInterface
             throw new GraphQlInputException(__('Required parameter "entityType" is missing'));
         }
 
+        /** @var StoreInterface $store */
+        $store = $context->getExtensionAttributes()->getStore();
+        $storeId = (int)$store->getId();
+
         $items = [];
         $entityType = $this->getEntityType($args['entityType']);
 
@@ -102,7 +107,7 @@ class AttributesMetadata implements ResolverInterface
         );
 
         foreach ($attributes as $attribute) {
-            $items[] = $this->metadataProvider->getAttributeMetadata($attribute, $entityType);
+            $items[] = $this->metadataProvider->getAttributeMetadata($attribute, $storeId, $entityType);
         }
         return [
             'items' => $items

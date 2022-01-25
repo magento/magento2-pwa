@@ -54,4 +54,10 @@
             </argument>
         </arguments>
     </type>
+    <type name="Magento\Eav\Model\Entity\Attribute\Source\Table">
+        <plugin name="reorder_null_attribute_options" type="Magento\EavGraphQlAux\Plugin\ReorderNullAttributeOptions"/>
+    </type>
+    <type name="Magento\Eav\Model\Entity\Collection\AbstractCollection">
+        <plugin name="reorder_null_attribute_values" type="Magento\EavGraphQlAux\Plugin\ReorderNullAttributeValues"/>
+    </type>
 </config>
