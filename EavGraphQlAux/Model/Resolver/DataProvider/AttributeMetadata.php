@@ -81,7 +81,6 @@ class AttributeMetadata
             'data_type' => $dataType !== '' ? $dataType : self::COMPLEX_DATA_TYPE,
             'sort_order' => $attribute->getPosition(),
             'is_system' => !$attribute->getIsUserDefined(),
-            'is_visible_on_front' => $attribute->getIsVisibleOnFront(),
             'entity_type' => $this->enumLookup->getEnumValueFromField(
                 'AttributeEntityTypeEnum',
                 $attribute->getEntityType()->getEntityTypeCode()
