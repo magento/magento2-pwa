@@ -23,7 +23,6 @@ interface AttributeMetadataInterface @typeResolver(class: "Magento\\EavGraphQlAu
     data_type: ObjectDataTypeEnum @doc(description: "The data type of the attribute.")
     sort_order: Int @doc(description: "The relative position of the attribute.")
     is_system: Boolean @doc(description: "Indicates whether the attribute is a system attribute.")
-    is_visible_on_front: Boolean @doc(description: "Indicates whether the attribute is visible on Catalog Pages on Storefront.")
     entity_type: AttributeEntityTypeEnum @doc(description: "The type of entity that defines the attribute.")
     ui_input: UiInputTypeInterface @doc(description: "Frontend UI properties of the attribute.")
 }

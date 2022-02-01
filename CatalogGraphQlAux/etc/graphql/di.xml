@@ -13,9 +13,6 @@
             </argument>
         </arguments>
     </type>
-    <type name="Magento\CatalogGraphQl\Model\Resolver\Aggregations">
-        <plugin name="aggregations-reorder" type="Magento\CatalogGraphQlAux\Plugin\Aggregations"/>
-    </type>
     <type name="Magento\CatalogGraphQl\Model\Resolver\Products\Query\FieldSelection">
         <plugin name="custom-attributes-fields" type="Magento\CatalogGraphQlAux\Plugin\Query\FieldSelection"/>
     </type>
