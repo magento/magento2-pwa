@@ -11,12 +11,12 @@
     },
     "require": {
         "php": "~7.4.0||~8.1.0",
-        "magento/framework": "*",
-        "magento/module-store": "*",
-        "magento/module-newsletter": "*"
+        "magento/framework": "*"
     },
     "suggest": {
-        "magento/module-graph-ql": "*"
+        "magento/module-graph-ql": "*",
+        "magento/module-newsletter": "*",
+        "magento/module-store": "*"
     },
     "autoload": {
         "files": [

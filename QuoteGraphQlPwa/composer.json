@@ -12,11 +12,11 @@
     "require": {
         "php": "~7.4.0||~8.1.0",
         "magento/framework": "*",
-        "magento/module-quote": "*",
-        "magento/module-quote-graph-ql": "*"
+        "magento/module-quote": "*"
     },
     "suggest": {
-        "magento/module-graph-ql": "*"
+        "magento/module-graph-ql": "*",
+        "magento/module-quote-graph-ql": "*"
     },
     "autoload": {
         "files": [

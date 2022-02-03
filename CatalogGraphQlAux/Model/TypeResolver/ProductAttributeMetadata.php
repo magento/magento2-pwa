@@ -15,7 +15,7 @@ use Magento\Catalog\Api\Data\ProductAttributeInterface as Type;
  */
 class ProductAttributeMetadata implements TypeResolverInterface
 {
-    const TYPE = 'ProductAttributeMetadata';
+    private const TYPE = 'ProductAttributeMetadata';
 
     /**
      * @inheritdoc

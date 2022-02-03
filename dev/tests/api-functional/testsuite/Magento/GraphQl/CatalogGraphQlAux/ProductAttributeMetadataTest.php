@@ -5,7 +5,7 @@
  */
 declare(strict_types=1);
 
-namespace Magento\CatalogGraphQlAux\Test\GraphQl;
+namespace Magento\GraphQl\CatalogGraphQlAux;
 
 use Magento\Eav\Api\AttributeRepositoryInterface;
 use Magento\Eav\Api\Data\AttributeOptionInterface;
@@ -74,44 +74,65 @@ class ProductAttributeMetadataTest extends GraphQlAbstract
  }
 QUERY;
         $response = $this->graphQlQuery($query);
-        $expectedAttributeUids = [
-            $this->uid->encode('catalog_product/cost'),
-            $this->uid->encode('catalog_product/manufacturer'),
-            $this->uid->encode('catalog_product/color')
+        $this->assertArrayNotHasKey('errors', $response);
+        $expectedAttributesMetadata = [
+            'cost' => [
+                "__typename" => 'ProductAttributeMetadata',
+                "uid" => $this->uid->encode('catalog_product/cost'),
+                "code" => 'cost',
+                "label" => 'Cost',
+                "data_type" => 'FLOAT',
+                "entity_type" => "PRODUCT",
+                "is_system" => false,
+                "ui_input" => [
+                    "ui_input_type"=> 'PRICE',
+                    "is_html_allowed"=> false,
+                    "__typename" => 'UiAttributeTypeAny'
+                ],
+                "used_in_components" => []
+            ],
+            'manufacturer' => [
+                "__typename" => 'ProductAttributeMetadata',
+                "uid" => $this->uid->encode('catalog_product/manufacturer'),
+                "code" => 'manufacturer',
+                "label" => 'Manufacturer',
+                "data_type" => 'INT',
+                "entity_type" => "PRODUCT",
+                "is_system" => false,
+                "ui_input" => [
+                    "ui_input_type"=> 'SELECT',
+                    "is_html_allowed"=> false,
+                    "__typename" => 'UiAttributeTypeSelect'
+                ],
+                "used_in_components" => ['PRODUCTS_COMPARE', 'PRODUCT_FILTER', 'ADVANCED_CATALOG_SEARCH']
+            ],
+            'color' => [
+                "__typename" => 'ProductAttributeMetadata',
+                "uid" => $this->uid->encode('catalog_product/color'),
+                "code" => 'color',
+                "label" => 'Color',
+                "data_type" => 'INT',
+                "entity_type" => "PRODUCT",
+                "is_system" => false,
+                "ui_input" => [
+                    "ui_input_type"=> 'SELECT',
+                    "is_html_allowed"=> false,
+                    "__typename" => 'UiAttributeTypeSelect'
+                ],
+                "used_in_components" => ['PRODUCTS_COMPARE', 'PRODUCT_FILTER', 'ADVANCED_CATALOG_SEARCH']
+            ],
         ];
-        $expectedAttributeCodes = [
-            'cost',
-            'manufacturer',
-            'color'
-        ];
-        $expectedLabels = [
-            "Cost",
-            "Manufacturer",
-            "Color"
-        ];
-        $expectedDataTypes = ['FLOAT', 'INT', 'INT'];
-        $expectedInputTypes = ['PRICE', 'SELECT', 'SELECT'];
-        $expectedIsHtmlTypes = [false, false, false];
-        $expectedInputTypesTypenames = ['UiAttributeTypeAny', 'UiAttributeTypeSelect', 'UiAttributeTypeSelect'];
-        $expectedUseInComponents = [
-            [],
-            ['PRODUCTS_COMPARE', 'PRODUCT_FILTER', 'ADVANCED_CATALOG_SEARCH'],
-            ['PRODUCTS_COMPARE', 'PRODUCT_FILTER', 'ADVANCED_CATALOG_SEARCH']
-        ];
-        $expectedIsSystem = [false, false, false];
-
-        $this->assertAttributeType(
-            $expectedAttributeUids,
-            $expectedAttributeCodes,
-            $expectedLabels,
-            $expectedDataTypes,
-            $expectedInputTypes,
-            $expectedIsHtmlTypes,
-            $expectedInputTypesTypenames,
-            $expectedUseInComponents,
-            $expectedIsSystem,
-            $response
-        );
+        $attributes = [];
+        foreach ($response['attributesMetadata']['items'] as $item) {
+            if (isset($expectedAttributesMetadata[$item['code']])) {
+                $this->assertResponseFields(
+                    $item,
+                    $expectedAttributesMetadata[$item['code']]
+                );
+                $attributes[] = $item['code'];
+            }
+        }
+        $this->assertEqualsCanonicalizing(array_keys($expectedAttributesMetadata), $attributes);
     }
 
     /**

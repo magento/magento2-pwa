@@ -100,9 +100,8 @@ class ContactUs implements ResolverInterface
     /**
      * Clean input values and set default values
      *
-     * @param array<string, string> $input
-     *
-     * @return array<string, string>
+     * @param string[] $input
+     * @return string[]
      */
     public function cleanInput(array $input): array
     {
@@ -130,10 +129,9 @@ class ContactUs implements ResolverInterface
     /**
      * Validate input data
      *
-     * @param array<string, string> $input
-     *
+     * @param string[] $input
      * @return void
-     * @throws \Magento\Framework\GraphQl\Exception\GraphQlInputException
+     * @throws GraphQlInputException
      */
     public function validateInput(array $input): void
     {

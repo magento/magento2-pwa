@@ -14,7 +14,7 @@ use Magento\Framework\GraphQl\Query\Resolver\TypeResolverInterface;
  */
 class UiAttributeTypeBoolean implements TypeResolverInterface
 {
-    const TYPE = 'UiAttributeTypeBoolean';
+    private const TYPE = 'UiAttributeTypeBoolean';
 
     /**
      * @inheritdoc

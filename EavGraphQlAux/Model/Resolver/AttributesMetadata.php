@@ -13,9 +13,6 @@ use Magento\EavGraphQlAux\Model\Resolver\Query\Attributes;
 use Magento\Framework\GraphQl\Config\Element\Field;
 use Magento\Framework\GraphQl\Exception\GraphQlInputException;
 use Magento\Framework\GraphQl\Query\ResolverInterface;
-use Magento\Framework\GraphQl\Query\Uid;
-use Magento\Framework\GraphQl\Query\EnumLookup;
-use Magento\EavGraphQl\Model\Resolver\Query\Type;
 use Magento\EavGraphQlAux\Model\Resolver\DataProvider\AttributeMetadata as MetadataProvider;
 use Magento\Store\Api\Data\StoreInterface;
 
@@ -24,8 +21,6 @@ use Magento\Store\Api\Data\StoreInterface;
  */
 class AttributesMetadata implements ResolverInterface
 {
-    const COMPLEX_DATA_TYPE = 'COMPLEX';
-
     /**
      * @var Attributes
      */
@@ -41,40 +36,18 @@ class AttributesMetadata implements ResolverInterface
      */
     private $enumDataMapper;
 
-    /** @var Uid */
-    private $uidEncoder;
-
-    /**
-     * @var EnumLookup
-     */
-    private $enumLookup;
-
-    /**
-     * @var Type
-     */
-    private $type;
-
     /**
      * @param Attributes $attributes
      * @param DataMapperInterface $enumDataMapper
-     * @param Uid $uidEncoder
-     * @param EnumLookup $enumLookup
-     * @param Type $type
      * @param MetadataProvider $metadataProvider
      */
     public function __construct(
         Attributes $attributes,
         DataMapperInterface $enumDataMapper,
-        Uid $uidEncoder,
-        EnumLookup $enumLookup,
-        Type $type,
         MetadataProvider $metadataProvider
     ) {
         $this->attributes = $attributes;
         $this->enumDataMapper = $enumDataMapper;
-        $this->uidEncoder = $uidEncoder;
-        $this->enumLookup = $enumLookup;
-        $this->type = $type;
         $this->metadataProvider = $metadataProvider;
     }
 

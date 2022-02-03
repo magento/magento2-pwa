@@ -5,14 +5,14 @@
  */
 declare(strict_types=1);
 
-namespace Magento\ReCaptchaGraphQlPwa\Test\GraphQl;
+namespace Magento\GraphQl\ReCaptchaGraphQlPwa;
 
 use Magento\TestFramework\TestCase\GraphQlAbstract;
 
 class ConfigResolverTest extends GraphQlAbstract
 {
     /**
-     * @magentoApiDataFixture Magento_ReCaptchaGraphQlPwa::Test/GraphQl/_files/config_full.php
+     * @magentoApiDataFixture Magento/ReCaptchaGraphQlPwa/_files/config_full.php
      */
     public function testFullyConfigured()
     {
@@ -43,7 +43,7 @@ class ConfigResolverTest extends GraphQlAbstract
     }
 
     /**
-     * @magentoApiDataFixture Magento_ReCaptchaGraphQlPwa::Test/GraphQl/_files/config_reduced_forms.php
+     * @magentoApiDataFixture Magento/ReCaptchaGraphQlPwa/_files/config_reduced_forms.php
      */
     public function testReducedForms()
     {
@@ -69,7 +69,7 @@ class ConfigResolverTest extends GraphQlAbstract
     }
 
     /**
-     * @magentoApiDataFixture Magento_ReCaptchaGraphQlPwa::Test/GraphQl/_files/config_no_private_key.php
+     * @magentoApiDataFixture Magento/ReCaptchaGraphQlPwa/_files/config_no_private_key.php
      */
     public function testEmptyPrivateKey()
     {
@@ -80,7 +80,7 @@ class ConfigResolverTest extends GraphQlAbstract
     }
 
     /**
-     * @magentoApiDataFixture Magento_ReCaptchaGraphQlPwa::Test/GraphQl/_files/config_no_public_key.php
+     * @magentoApiDataFixture Magento/ReCaptchaGraphQlPwa/_files/config_no_public_key.php
      */
     public function testEmptyPublicKey()
     {
@@ -91,7 +91,7 @@ class ConfigResolverTest extends GraphQlAbstract
     }
 
     /**
-     * @magentoApiDataFixture Magento_ReCaptchaGraphQlPwa::Test/GraphQl/_files/config_no_forms.php
+     * @magentoApiDataFixture Magento/ReCaptchaGraphQlPwa/_files/config_no_forms.php
      */
     public function testEmptyForms()
     {
@@ -102,7 +102,7 @@ class ConfigResolverTest extends GraphQlAbstract
     }
 
     /**
-     * @magentoApiDataFixture Magento_ReCaptchaGraphQlPwa::Test/GraphQl/_files/config_empty.php
+     * @magentoApiDataFixture Magento/ReCaptchaGraphQlPwa/_files/config_empty.php
      */
     public function testEmptyConfiguration()
     {
