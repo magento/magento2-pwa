@@ -19,6 +19,9 @@
     <type name="Magento\CatalogGraphQl\DataProvider\Product\LayeredNavigation\Builder\Price">
         <plugin name="price-add-position" type="Magento\CatalogGraphQlAux\Plugin\Price"/>
     </type>
+    <type name="Magento\CatalogGraphQl\Model\Resolver\Category\SortFields">
+        <plugin name="sort-fields-label-by-store" type="Magento\CatalogGraphQlAux\Plugin\Model\Resolver\Category\SortFields"/>
+    </type>
     <type name="Magento\CatalogGraphQlAux\Model\Resolver\CustomAttributes">
         <arguments>
             <argument name="selectableTypes" xsi:type="array">
