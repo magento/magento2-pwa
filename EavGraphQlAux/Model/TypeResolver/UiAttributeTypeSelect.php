@@ -14,7 +14,7 @@ use Magento\Framework\GraphQl\Query\Resolver\TypeResolverInterface;
  */
 class UiAttributeTypeSelect implements TypeResolverInterface
 {
-    const TYPE = 'UiAttributeTypeSelect';
+    private const TYPE = 'UiAttributeTypeSelect';
 
     /**
      * @inheritdoc

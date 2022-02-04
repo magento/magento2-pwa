@@ -14,7 +14,7 @@ use Magento\Framework\GraphQl\Query\Resolver\TypeResolverInterface;
  */
 class UiAttributeTypeFixedProductTax implements TypeResolverInterface
 {
-    const TYPE = 'UiAttributeTypeFixedProductTax';
+    private const TYPE = 'UiAttributeTypeFixedProductTax';
 
     /**
      * @inheritdoc

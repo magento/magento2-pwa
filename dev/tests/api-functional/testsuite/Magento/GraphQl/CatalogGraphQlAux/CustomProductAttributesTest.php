@@ -5,7 +5,7 @@
  */
 declare(strict_types=1);
 
-namespace Magento\CatalogGraphQlAux\Test\GraphQl;
+namespace Magento\GraphQl\CatalogGraphQlAux;
 
 use Magento\Eav\Api\Data\AttributeOptionInterface;
 use Magento\Eav\Model\Config;
@@ -129,7 +129,7 @@ QUERY;
             $this->assertEquals($expectedOptions, $actualOption);
         }
 
-        $this->assertEquals(null, $actualAttributes['entered_attribute_value']);
+        $this->assertEquals(null, $actualAttributes['entered_attribute_value']['value']);
         $this->assertEquals(
             'SelectedAttributeOption',
             $actualAttributes['selected_attribute_options']['__typename']
@@ -183,7 +183,10 @@ QUERY;
         $actualAttributes = $response['products']['items'][0]['custom_attributes'][0];
 
         $this->assertEquals('TEXT', $actualAttributes['attribute_metadata']['ui_input']['ui_input_type']);
-        $this->assertEquals(null, $actualAttributes['selected_attribute_options']);
+        $this->assertEquals(
+            ['__typename' => 'SelectedAttributeOption'],
+            $actualAttributes['selected_attribute_options']
+        );
         $this->assertEquals(
             'EnteredAttributeValue',
             $actualAttributes['entered_attribute_value']['__typename']
