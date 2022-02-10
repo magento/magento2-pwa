@@ -6,3 +6,4 @@ magento/module-quote-graph-ql-pwa
 magento/module-re-captcha-graph-ql-pwa
 magento/module-re-captcha-pwa
 magento/module-weee-graph-ql-aux
+magento/module-page-builder-pwa
