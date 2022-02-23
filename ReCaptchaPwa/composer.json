@@ -13,11 +13,15 @@
         "php": "~7.4.0||~8.1.0",
         "magento/framework": "*",
         "magento/module-config": "*",
+        "magento/module-checkout": "*",
         "magento/module-customer-graph-ql": "*",
+        "magento/module-quote-graph-ql": "*",
+        "magento/module-re-captcha-checkout": "*",
         "magento/module-re-captcha-customer": "*",
         "magento/module-re-captcha-ui": "*",
         "magento/module-re-captcha-validation-api": "*",
-        "magento/module-re-captcha-webapi-api": "*"
+        "magento/module-re-captcha-webapi-api": "*",
+        "magento/module-re-captcha-webapi-graph-ql": "*"
     },
     "autoload": {
         "files": [

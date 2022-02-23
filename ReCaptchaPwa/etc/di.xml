@@ -7,9 +7,18 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-    <type
-        name="Magento\ReCaptchaCustomer\Model\WebapiConfigProvider">
-        <plugin name="update-recaptcha-config-provider"
-                type="Magento\ReCaptchaPwa\Plugin\Model\WebapiConfigProvider"/>
+    <type name="Magento\ReCaptchaCustomer\Model\WebapiConfigProvider">
+        <plugin name="update-recaptcha-customer-config-provider"
+                type="Magento\ReCaptchaPwa\Plugin\Model\CustomerWebapiConfigProvider"/>
+    </type>
+    <type name="Magento\ReCaptchaCheckout\Model\WebapiConfigProvider">
+        <plugin name="update-recaptcha-checkout-config-provider"
+                type="Magento\ReCaptchaPwa\Plugin\Model\CheckoutWebapiConfigProvider"/>
+    </type>
+    <type name="Magento\Framework\GraphQl\Query\ResolverInterface">
+        <plugin name="graphql-recaptcha-braintree-validator"
+                type="Magento\ReCaptchaPwa\Plugin\GraphQlValidatorPlugin"
+                sortOrder="10"/>
+        <plugin name="graphql_recaptcha_validation" sortOrder="20" />
     </type>
 </config>

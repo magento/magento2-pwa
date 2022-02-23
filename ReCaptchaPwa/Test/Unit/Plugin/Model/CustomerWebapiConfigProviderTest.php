@@ -14,9 +14,9 @@ use Magento\ReCaptchaCustomer\Model\WebapiConfigProvider;
 use Magento\ReCaptchaUi\Model\IsCaptchaEnabledInterface;
 use Magento\ReCaptchaUi\Model\ValidationConfigResolverInterface;
 use Magento\ReCaptchaValidationApi\Api\Data\ValidationConfigInterface;
-use Magento\ReCaptchaPwa\Plugin\Model\WebapiConfigProvider as WebapiConfigProviderPlugin;
+use Magento\ReCaptchaPwa\Plugin\Model\CustomerWebapiConfigProvider as WebapiConfigProviderPlugin;
 
-class WebapiConfigProviderTest extends TestCase
+class CustomerWebapiConfigProviderTest extends TestCase
 {
     /**
      * @var WebapiConfigProviderPlugin
@@ -38,6 +38,9 @@ class WebapiConfigProviderTest extends TestCase
      */
     protected $validationConfigInterfaceMock;
 
+    /**
+     * Setup
+     */
     protected function setUp(): void
     {
         $this->isCaptchaEnabledInterfaceMock = $this->createMock(IsCaptchaEnabledInterface::class);
@@ -51,6 +54,11 @@ class WebapiConfigProviderTest extends TestCase
         );
     }
 
+    /**
+     * Test afterGetConfigFor for reset password form
+     *
+     * @throws \Magento\Framework\Exception\InputException
+     */
     public function testAfterGetConfigForResetPasswordForm()
     {
         $this->isCaptchaEnabledInterfaceMock
@@ -80,6 +88,11 @@ class WebapiConfigProviderTest extends TestCase
         );
     }
 
+    /**
+     * Test afterGetConfigFor for password reset form
+     *
+     * @throws \Magento\Framework\Exception\InputException
+     */
     public function testAfterGetConfigForPasswordResetForm()
     {
         $this->isCaptchaEnabledInterfaceMock
@@ -109,6 +122,11 @@ class WebapiConfigProviderTest extends TestCase
         );
     }
 
+    /**
+     * Test afterGetConfigFor for fake form
+     *
+     * @throws \Magento\Framework\Exception\InputException
+     */
     public function testAfterGetConfigForFakeForm()
     {
         $webapiConfigProviderMock = $this->createMock(WebapiConfigProvider::class);
