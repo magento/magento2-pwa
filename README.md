@@ -73,20 +73,6 @@ To improve the developer experience even further, you can add these configuratio
     echo ext >> ./.git/info/exclude
     ```
 
-1. Skip your project's root directory `composer.\*` files to avoid committing them by mistake:
-
-    ```bash
-    git update-index --skip-worktree composer.json
-    git update-index --skip-worktree composer.lock
-    ```
-
-    NOTE: You can reverse this operation anytime as needed:
-
-    ```bash
-    git update-index --no-skip-worktree composer.json
-    git update-index --no-skip-worktree composer.lock
-    ```
-
 ## Cloud deployment extension installation
 
 1. Add https://repo.magento.com as a composer repository by adding the following to your cloud instances `composer.json` file.
