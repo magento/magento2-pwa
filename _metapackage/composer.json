@@ -9,7 +9,8 @@
         "magento/module-catalog-graph-ql-aux": "*",
         "magento/module-weee-graph-ql-aux": "*",
         "magento/module-re-captcha-pwa": "*",
-        "magento/module-re-captcha-graph-ql-pwa": "*"
+        "magento/module-re-captcha-graph-ql-pwa": "*",
+        "magento/module-sales-graph-ql-aux": "*"
     },
     "type": "metapackage"
 }
