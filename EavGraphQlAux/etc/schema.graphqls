@@ -64,6 +64,12 @@ type UiAttributeTypeBoolean implements UiInputTypeInterface, AttributeOptionsInt
 type UiAttributeTypeAny implements UiInputTypeInterface {
 }
 
+type UiAttributeTypeTextarea implements UiInputTypeInterface {
+}
+
+type UiAttributeTypeTextEditor implements UiInputTypeInterface {
+}
+
 type StoreLabels @doc(description: "Contains the store code and label of an attribute.") {
     store_code: String @doc(description: "The assigned store code.")
     label: String @doc(description: "The label assigned to the attribute.")
@@ -92,6 +98,7 @@ enum UiInputTypeEnum {
     SELECT
     TEXT
     TEXTAREA
+    TEXTEDITOR
     WEIGHT
 }
 

@@ -7,11 +7,13 @@ declare(strict_types=1);
 
 namespace Magento\CatalogGraphQlAux\Model\Resolver;
 
+use Magento\Catalog\Helper\Output as OutputHelper;
 use Magento\Catalog\Model\Product;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\GraphQl\Config\Element\Field;
 use Magento\Framework\GraphQl\Query\ResolverInterface;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
+use Magento\Framework\App\ObjectManager;
 use Magento\EavGraphQlAux\Model\Resolver\Query\Attributes;
 use Magento\Framework\GraphQl\Query\Uid;
 use Magento\EavGraphQlAux\Model\Resolver\DataProvider\AttributeMetadata;
@@ -24,6 +26,11 @@ use Magento\Store\Api\Data\StoreInterface;
  */
 class CustomAttributes implements ResolverInterface
 {
+    /**
+     * @var OutputHelper
+     */
+    private $outputHelper;
+
     /**
      * @var string[]
      */
@@ -55,19 +62,23 @@ class CustomAttributes implements ResolverInterface
      * @param AttributeMetadata $metadataProvider
      * @param AttributeOptions $attributeOptions
      * @param array|null $selectableTypes
+     * @param OutputHelper|null $outputHelper
      */
     public function __construct(
         Uid $uidEncoder,
         Attributes $attributes,
         AttributeMetadata $metadataProvider,
         AttributeOptions $attributeOptions,
-        array $selectableTypes = null
+        array $selectableTypes = null,
+        OutputHelper $outputHelper = null
     ) {
         $this->uidEncoder = $uidEncoder;
         $this->attributes = $attributes;
         $this->metadataProvider = $metadataProvider;
         $this->attributeOptions = $attributeOptions;
         $this->selectableTypes = $selectableTypes ?? ['SELECT'];
+        $this->outputHelper = $outputHelper ?: ObjectManager::getInstance()
+            ->get(outputHelper::class);
     }
 
     /**
@@ -110,7 +121,13 @@ class CustomAttributes implements ResolverInterface
                 ];
             } else {
                 $attributeData['entered_attribute_value'] = [
-                    'value' => $attributeValue
+                    'value' =>  $attribute->getIsHtmlAllowedOnFront() ?
+                        $this->outputHelper->productAttribute(
+                            $product,
+                            $attributeValue,
+                            $attribute->getAttributeCode()
+                        ) :
+                        $attributeValue
                 ];
                 $attributeData['selected_attribute_options'] = [];
             }

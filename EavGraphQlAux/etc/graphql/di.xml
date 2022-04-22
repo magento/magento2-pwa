@@ -13,6 +13,8 @@
                 <item name="ui_select_type_resolver" xsi:type="object">Magento\EavGraphQlAux\Model\TypeResolver\UiAttributeTypeSelect</item>
                 <item name="ui_multiselect_type_resolver" xsi:type="object">Magento\EavGraphQlAux\Model\TypeResolver\UiAttributeTypeMultiSelect</item>
                 <item name="ui_boolean_type_resolver" xsi:type="object">Magento\EavGraphQlAux\Model\TypeResolver\UiAttributeTypeBoolean</item>
+                <item name="ui_textarea_type_resolver" xsi:type="object">Magento\EavGraphQlAux\Model\TypeResolver\UiAttributeTypeTextarea</item>
+                <item name="ui_texteditor_type_resolver" xsi:type="object">Magento\EavGraphQlAux\Model\TypeResolver\UiAttributeTypeTextEditor</item>
             </argument>
         </arguments>
     </type>
@@ -49,6 +51,7 @@
                     <item name="swatch_visual" xsi:type="string">swatch_visual</item>
                     <item name="text" xsi:type="string">text</item>
                     <item name="textarea" xsi:type="string">textarea</item>
+                    <item name="texteditor" xsi:type="string">texteditor</item>
                     <item name="weight" xsi:type="string">weight</item>
                 </item>
             </argument>

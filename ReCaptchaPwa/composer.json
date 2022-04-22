@@ -20,8 +20,7 @@
         "magento/module-re-captcha-customer": "*",
         "magento/module-re-captcha-ui": "*",
         "magento/module-re-captcha-validation-api": "*",
-        "magento/module-re-captcha-webapi-api": "*",
-        "magento/module-re-captcha-webapi-graph-ql": "*"
+        "magento/module-re-captcha-webapi-api": "*"
     },
     "autoload": {
         "files": [

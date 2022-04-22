@@ -72,6 +72,9 @@ class AttributeMetadata
             $attribute->getEntityType()->getEntityTypeCode()
         );
         $dataType = $this->enumLookup->getEnumValueFromField('ObjectDataTypeEnum', $attributeType);
+        $uiInputType = $attribute->getFrontendInput() === "textarea" && $attribute->getIsWysiwygEnabled() ?
+            'texteditor' :
+            $attribute->getFrontendInput();
 
         return [
             'uid' => $this->uidEncoder->encode($entityType . '/' . $attribute->getAttributeCode()),
@@ -88,7 +91,7 @@ class AttributeMetadata
             'ui_input' => [
                 'ui_input_type' => $this->enumLookup->getEnumValueFromField(
                     'UiInputTypeEnum',
-                    $attribute->getFrontendInput()
+                    $uiInputType
                 ),
                 'is_html_allowed' => $attribute->getIsHtmlAllowedOnFront(),
                 'attribute' => $attribute

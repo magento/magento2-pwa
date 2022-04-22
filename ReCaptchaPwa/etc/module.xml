@@ -21,7 +21,6 @@
             <module name="Magento_ReCaptchaVersion2Checkbox"/>
             <module name="Magento_ReCaptchaVersion2Invisible"/>
             <module name="Magento_ReCaptchaWebapiApi"/>
-            <module name="Magento_ReCaptchaWebapiGraphQl"/>
         </sequence>
     </module>
 </config>

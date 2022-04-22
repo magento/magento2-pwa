@@ -221,7 +221,7 @@ QUERY;
 {
   attributesMetadata(
     entityType: PRODUCT,
-    attributeUids: ["Y2F0YWxvZ19wcm9kdWN0L2Rlc2NyaXB0aW9u"],
+    attributeUids: ["Y2F0YWxvZ19wcm9kdWN0L3Nob3J0X2Rlc2NyaXB0aW9u"],
     showSystemAttributes: true
   )
   {
@@ -253,20 +253,20 @@ QUERY;
 QUERY;
         $response = $this->graphQlQuery($query);
         $expectedAttributeUids = [
-            $this->uid->encode('catalog_product/description'),
+            $this->uid->encode('catalog_product/short_description'),
         ];
         $expectedAttributeCodes = [
-            'description'
+            'short_description'
         ];
         $expectedLabels = [
-            "Description",
+            "Short Description",
         ];
         $expectedDataTypes = ['STRING'];
-        $expectedInputTypes = ['TEXTAREA'];
+        $expectedInputTypes = ['TEXTEDITOR'];
         $expectedIsHtmlTypes = [true];
-        $expectedInputTypesTypenames = ['UiAttributeTypeAny'];
+        $expectedInputTypesTypenames = ['UiAttributeTypeTextEditor'];
         $expectedUseInComponents = [
-            ['PRODUCTS_COMPARE', 'ADVANCED_CATALOG_SEARCH']
+            ['PRODUCTS_LISTING', 'PRODUCTS_COMPARE', 'ADVANCED_CATALOG_SEARCH']
         ];
         $expectedIsSystem = [true];
 

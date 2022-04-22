@@ -13,6 +13,7 @@
         "magento/framework": "*",
         "magento/module-cms": "*",
         "magento/module-page-builder": "*",
+        "magento/module-eav-graph-ql-aux": "*",
         "php": "~7.4.0||~8.1.0",
         "phpgt/dom": "*"
     },
