@@ -7,3 +7,4 @@ magento/module-re-captcha-graph-ql-pwa
 magento/module-re-captcha-pwa
 magento/module-weee-graph-ql-aux
 magento/module-page-builder-pwa
+magento/module-url-rewrite-graph-ql-pwa
