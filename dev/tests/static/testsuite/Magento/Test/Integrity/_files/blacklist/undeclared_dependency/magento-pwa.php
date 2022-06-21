@@ -6,5 +6,6 @@
  * See COPYING.txt for license details.
  */
 return [
-    'app/code/Magento/PageBuilderPwa/Plugin/UiInputTypePageBuilder.php' => ['Magento\Eav']
+    'app/code/Magento/PageBuilderPwa/Plugin/UiInputTypePageBuilder.php' => ['Magento\Eav'],
+    'app/code/Magento/SalesGraphQlAux/Model/Resolver/OrderState.php' => ['Magento\Sales']
 ];

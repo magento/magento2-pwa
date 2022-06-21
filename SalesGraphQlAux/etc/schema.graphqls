@@ -1,0 +1,6 @@
+# Copyright © Magento, Inc. All rights reserved.
+# See COPYING.txt for license details.
+
+type CustomerOrder {
+    state: String! @doc(description: "The current state of the order.") @resolver(class: "Magento\\SalesGraphQlAux\\Model\\Resolver\\OrderState")
+}

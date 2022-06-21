@@ -1,0 +1,25 @@
+{
+    "name": "magento/module-sales-graph-ql-aux",
+    "description": "N/A",
+    "type": "magento2-module",
+    "require": {
+        "php": "~7.4.0||~8.1.0",
+        "magento/framework": "*"
+    },
+    "suggest": {
+        "magento/module-sales-graph-ql": "*",
+        "magento/module-graph-ql": "*"
+    },
+    "license": [
+        "OSL-3.0",
+        "AFL-3.0"
+    ],
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Magento\\SalesGraphQlAux\\": ""
+        }
+    }
+}
