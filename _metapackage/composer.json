@@ -4,7 +4,6 @@
     "require": {
         "magento/module-contact-graph-ql-pwa": "*",
         "magento/module-newsletter-graph-ql-pwa": "*",
-        "magento/module-quote-graph-ql-pwa": "*",
         "magento/module-eav-graph-ql-aux": "*",
         "magento/module-catalog-graph-ql-aux": "*",
         "magento/module-weee-graph-ql-aux": "*",
