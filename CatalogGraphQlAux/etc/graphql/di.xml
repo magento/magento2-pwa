@@ -19,6 +19,11 @@
     <type name="Magento\CatalogGraphQl\DataProvider\Product\LayeredNavigation\Builder\Price">
         <plugin name="price-add-position" type="Magento\CatalogGraphQlAux\Plugin\Price"/>
     </type>
+
+    <type name="Magento\CatalogGraphQl\DataProvider\Product\LayeredNavigation\Builder\Category">
+        <plugin name="category-uid-update" type="Magento\CatalogGraphQlAux\Plugin\CategoryUidUpdate"/>
+    </type>
+
     <type name="Magento\CatalogGraphQl\Model\Resolver\Category\SortFields">
         <plugin name="sort-fields-label-by-store" type="Magento\CatalogGraphQlAux\Plugin\Model\Resolver\Category\SortFields"/>
     </type>
