@@ -33,7 +33,7 @@ class ReorderNullAttributeOptions
             $attributeCode = $subject->getAttribute()->getAttributeCode();
             $collection->getSelect()->reset(Select::ORDER);
             $collection->getSelect()->order(
-                new \Zend_Db_Expr("ISNULL({$attributeCode}_value), {$attributeCode}_value {$dir}")
+                new \Laminas\Db\Sql\Expression("ISNULL({$attributeCode}_value), {$attributeCode}_value {$dir}")
             );
         }
         return $result;
