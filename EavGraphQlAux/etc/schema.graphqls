@@ -9,6 +9,7 @@ type Query {
     AttributesMetadata
     @resolver(class: "Magento\\EavGraphQlAux\\Model\\Resolver\\AttributesMetadata")
     @doc(description: "Return details about custom EAV attributes, and optionally, system attributes.")
+    @deprecated(reason: "Use Adobe Commerce `customAttributeMetadataV2` query instead")
 }
 
 type AttributesMetadata @doc(description: "Contains an array of custom and system attributes.") {
