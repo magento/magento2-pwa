@@ -9,7 +9,7 @@ enum AttributeEntityTypeEnum {
     PRODUCT
 }
 
-enum CustomAttributesListsEnum {
+enum CustomAttributesListsEnum @doc(description: "Place where attribute used on the frontend side") {
     PRODUCT_DETAILS_PAGE
     PRODUCTS_LISTING
     PRODUCTS_COMPARE
@@ -20,5 +20,7 @@ enum CustomAttributesListsEnum {
 }
 
 interface ProductInterface {
-    custom_attributes: [CustomAttribute]! @resolver(class: "Magento\\CatalogGraphQlAux\\Model\\Resolver\\CustomAttributes") @doc(description: "List of product custom attributes details.")
+    custom_attributes(
+        components: [CustomAttributesListsEnum]
+    ): [CustomAttribute]! @resolver(class: "Magento\\CatalogGraphQlAux\\Model\\Resolver\\CustomAttributes") @doc(description: "List of product custom attributes details.")
 }

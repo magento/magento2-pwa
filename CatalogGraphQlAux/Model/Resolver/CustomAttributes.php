@@ -12,6 +12,7 @@ use Magento\Catalog\Model\Product;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\GraphQl\Config\Element\Field;
 use Magento\Framework\GraphQl\Query\ResolverInterface;
+use Magento\Framework\GraphQl\Schema\Type\Enum\DataMapperInterface;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
 use Magento\Framework\App\ObjectManager;
 use Magento\EavGraphQlAux\Model\Resolver\Query\Attributes;
@@ -57,12 +58,18 @@ class CustomAttributes implements ResolverInterface
     private $attributeOptions;
 
     /**
+     * @var DataMapperInterface
+     */
+    private $enumDataMapper;
+
+    /**
      * @param Uid $uidEncoder
      * @param Attributes $attributes
      * @param AttributeMetadata $metadataProvider
      * @param AttributeOptions $attributeOptions
      * @param array|null $selectableTypes
      * @param OutputHelper|null $outputHelper
+     * @param DataMapperInterface|null $enumDataMapper
      */
     public function __construct(
         Uid $uidEncoder,
@@ -70,7 +77,8 @@ class CustomAttributes implements ResolverInterface
         AttributeMetadata $metadataProvider,
         AttributeOptions $attributeOptions,
         array $selectableTypes = null,
-        OutputHelper $outputHelper = null
+        OutputHelper $outputHelper = null,
+        DataMapperInterface $enumDataMapper = null
     ) {
         $this->uidEncoder = $uidEncoder;
         $this->attributes = $attributes;
@@ -79,6 +87,8 @@ class CustomAttributes implements ResolverInterface
         $this->selectableTypes = $selectableTypes ?? ['SELECT'];
         $this->outputHelper = $outputHelper ?: ObjectManager::getInstance()
             ->get(outputHelper::class);
+        $this->enumDataMapper = $enumDataMapper ?: ObjectManager::getInstance()
+            ->get(DataMapperInterface::class);
     }
 
     /**
@@ -105,7 +115,13 @@ class CustomAttributes implements ResolverInterface
         $attributes = $this->attributes->getAttributes(Product::ENTITY, array_keys($attributesValuesByUid));
 
         $items = [];
+        $attributeComponentList = $this->getSelectedComponents((array) $args);
+
         foreach ($attributes as $attribute) {
+            if (!$this->isInComponent($attribute, $attributeComponentList)) {
+                continue;
+            }
+
             $attributeData['attribute_metadata'] = $this->metadataProvider->getAttributeMetadata(
                 $attribute,
                 $storeId,
@@ -204,5 +220,52 @@ class CustomAttributes implements ResolverInterface
     private function isSelectable(string $uiInputType): bool
     {
         return in_array($uiInputType, $this->selectableTypes);
+    }
+
+    /**
+     * Get selected attribute components to filter.
+     *
+     * @param array<string,string> $args
+     *
+     * @return array<string>
+     */
+    private function getSelectedComponents(array $args): array
+    {
+        $attributeComponentList = [];
+
+        if (isset($args['components'])) {
+            $listsMap = $this->enumDataMapper->getMappedEnums('CustomAttributesListsEnum');
+            $componentsInput = $args['components'] ?: [];
+
+            $attributeComponentList = array_map(
+                fn(string $component) => $listsMap[strtolower($component)] ?? null,
+                $componentsInput
+            );
+        }
+
+        return $attributeComponentList;
+    }
+
+    /**
+     * Once components list exists - attribute will be validated to be returned.
+     *
+     * @param AttributeInterface $attribute
+     * @param array<string> $attributeComponentList
+     *
+     * @return bool
+     */
+    private function isInComponent(AttributeInterface $attribute, array $attributeComponentList): bool
+    {
+        if (empty($attributeComponentList)) {
+            return true;
+        }
+
+        $isInComponent = false;
+
+        foreach ($attributeComponentList as $attributeComponent) {
+            $isInComponent = $isInComponent || $attribute->getData($attributeComponent);
+        }
+
+        return $isInComponent;
     }
 }
