@@ -20,5 +20,8 @@ enum CustomAttributesListsEnum {
 }
 
 interface ProductInterface {
-    custom_attributes: [CustomAttribute]! @resolver(class: "Magento\\CatalogGraphQlAux\\Model\\Resolver\\CustomAttributes") @doc(description: "List of product custom attributes details.")
+    custom_attributes: [CustomAttribute]!
+    @resolver(class: "Magento\\CatalogGraphQlAux\\Model\\Resolver\\CustomAttributes")
+    @doc(description: "List of product custom attributes details.")
+    @deprecated(reason: "Use Adobe Commerce `custom_attributesV2` query instead")
 }
