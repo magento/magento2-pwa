@@ -26,22 +26,7 @@ class CountryProviderPwa
      */
     public function afterGetCountry($subject,$result, \Magento\Quote\Model\Quote $quote)
     {
-        $writer = new \Zend_Log_Writer_Stream(BP . '/var/log/custom_log.log');            
-        $logger = new \Zend_Log();            
-        $logger->addWriter($writer);            
-        $logger->info('only for testing');            
-        $logger->info('country = ' . $quote->getShippingAddress()->getCountry());
-
-        $abc= (!empty($address) && !empty($address->getCountry()))
-            ? $address->getCountry()
-            : $quote->getShippingAddress()->getCountry();
-        $logger->info($abc);    
-        // $writer = new \Zend\Log\Writer\Stream(BP . '/var/log/custom_log.log');
-        // $logger = new \Zend\Log\Logger();
-        // $logger->addWriter($writer);
-        // $logger->info('only for testing');
-        // print_r("Plugin Working");
-        // die;
+       
         $address = $quote->getBillingAddress() ? : $quote->getShippingAddress();
         return (!empty($address) && !empty($address->getCountry()))
             ? $address->getCountry()
