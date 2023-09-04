@@ -5,8 +5,7 @@
  */
 
 namespace Magento\PaymentAux\Plugin;
-// use Magento\Quote\Model\Quote;
-
+use Magento\Quote\Model\Quote;
 
 /**
  * Select country which will be used for payment.
@@ -24,16 +23,11 @@ class CountryProviderPwa
      * @param Quote $quote
      * @return int
      */
-    public function afterGetCountry($subject,$result, \Magento\Quote\Model\Quote $quote)
-    {
-       
+    public function afterGetCountry($subject, $result, $quote)
+    { 
         $address = $quote->getBillingAddress() ? : $quote->getShippingAddress();
         return (!empty($address) && !empty($address->getCountry()))
             ? $address->getCountry()
             : $quote->getShippingAddress()->getCountry();
     }
 }
-
-
-
-
