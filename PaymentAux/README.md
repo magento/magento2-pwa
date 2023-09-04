@@ -1,4 +1,3 @@
-# Mage2 Module PaymentModel Checks
 
     ``paymentmodel/module-checks``
 
