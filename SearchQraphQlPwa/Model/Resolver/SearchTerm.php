@@ -1,0 +1,38 @@
+<?php
+/**
+ * Copyright ©  All rights reserved.
+ * See COPYING.txt for license details.
+ */
+declare(strict_types=1);
+
+namespace Magento\SearchQraphQlPwa\Model\Resolver;
+
+use Magento\Search\Model\Query;
+use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\GraphQl\Config\Element\Field;
+use Magento\Framework\GraphQl\Query\ResolverInterface;
+use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
+
+
+class SearchTerm implements ResolverInterface
+{
+
+    protected $Query; 
+
+    public function __construct( $subject, $result,\Magento\Search\Model\Query $Query)
+    {
+        $this->query = $Query;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function resolve(Field $field, $context, ResolveInfo $info, array $value = null, array $args = null) 
+    {
+        
+        $result = $this->query->loadByQueryText($args["Search"]);
+        return $result->getData();
+    }
+}
+

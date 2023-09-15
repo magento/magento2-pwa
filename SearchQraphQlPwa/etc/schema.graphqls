@@ -1,0 +1,14 @@
+# Copyright © Magento, Inc. All rights reserved.
+# See COPYING.txt for license details.
+
+type Query {
+    searchTerm (
+        Search: String @doc(description: "An input of Search Term")
+    ) : SearchTerm @resolver(class: "Magento\\SearchQraphQlPwa\\Model\\Resolver\\SearchTerm") 
+}
+
+type SearchTerm {
+    query_text : String @doc(description: "Containes the query_text of the selected Search Term")
+    redirect : String @doc(description: "Containes the Url of the selected Search Term")
+    popularity : Int @doc(description: "Containes the popularity of the selected Search Term")
+}
