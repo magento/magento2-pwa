@@ -7,12 +7,12 @@ declare(strict_types=1);
 
 namespace Magento\SearchQraphQlPwa\Model\Resolver;
 
-use Magento\Search\Model\Query;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\GraphQl\Config\Element\Field;
 use Magento\Framework\GraphQl\Query\ResolverInterface;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
+use Magento\Search\Model\Query;
 
 class SearchTerm implements ResolverInterface
 {
