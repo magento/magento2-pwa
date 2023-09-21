@@ -14,15 +14,13 @@ use Magento\Framework\GraphQl\Config\Element\Field;
 use Magento\Framework\GraphQl\Query\ResolverInterface;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
 
-
 class SearchTerm implements ResolverInterface
 {
+    protected $query; 
 
-    protected $Query; 
-
-    public function __construct( $subject, $result,\Magento\Search\Model\Query $Query)
+    public function __construct($subject, $result, \Magento\Search\Model\Query $query)
     {
-        $this->query = $Query;
+        $this->query = $query;
     }
 
     /**
@@ -30,9 +28,7 @@ class SearchTerm implements ResolverInterface
      */
     public function resolve(Field $field, $context, ResolveInfo $info, array $value = null, array $args = null) 
     {
-        
         $result = $this->query->loadByQueryText($args["Search"]);
         return $result->getData();
     }
 }
-
