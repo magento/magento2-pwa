@@ -17,7 +17,6 @@ use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
 class SearchTerm implements ResolverInterface
 {
     protected $query; 
-
     public function __construct($subject, $result, \Magento\Search\Model\Query $query)
     {
         $this->query = $query;
