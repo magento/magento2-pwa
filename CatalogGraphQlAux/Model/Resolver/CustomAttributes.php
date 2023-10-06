@@ -185,14 +185,30 @@ class CustomAttributes implements ResolverInterface
     ): array {
         $selectedOptionValues = explode(',', $attributeValue);
 
-        $selectedOptions = [];
-        foreach ($this->attributeOptions->getAttributeOptions($attribute) as $option) {
-            if (in_array($option['value'], $selectedOptionValues)) {
-                $selectedOptions[] = $option;
-            }
-        }
+        $options = $attribute->usesSource() ? $attribute->getSource()->getSpecificOptions($selectedOptionValues) : [];
 
-        return $selectedOptions;
+        $optionsData = [];
+        foreach ($options as $option) {
+            if ($option['value'] === '') {
+                continue;
+            }
+
+            $optionDetails = [
+                $attribute->getEntityType()->getEntityTypeCode(),
+                $attribute->getAttributeCode(),
+                (string) $option['value']
+            ];
+
+            $uidString = implode('/', $optionDetails);
+
+            $optionsData[] = [
+                'uid' => $this->uidEncoder->encode($uidString),
+                'value' => $option['value'],
+                'label' => $option['label'],
+                'is_default' => $option['value'] === $attribute->getDefaultValue()
+            ];
+        }
+        return $optionsData;
     }
 
     /**
