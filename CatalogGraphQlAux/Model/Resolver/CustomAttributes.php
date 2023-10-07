@@ -184,7 +184,6 @@ class CustomAttributes implements ResolverInterface
         string $attributeValue
     ): array {
         $selectedOptionValues = explode(',', $attributeValue);
-        $options = [];
 
         $attributeSource = $attribute->getSource();
 
@@ -192,11 +191,11 @@ class CustomAttributes implements ResolverInterface
             $options = $attributeSource->getSpecificOptions($selectedOptionValues);
         } elseif ($attributeSource) {
             $allOptions = $attribute->getData(AttributeInterface::OPTIONS) ?? $attributeSource->getAllOptions();
-            foreach ($allOptions as $option) {
-                if (isset(array_flip($selectedOptionValues)[$option['value']])) {
-                    $options[] = $option;
-                }
-            }
+            $options = array_filter($allOptions, function ($option) use ($selectedOptionValues) {
+                return in_array($option['value'], $selectedOptionValues);
+            });
+        } else {
+            return [];
         }
 
         $optionsData = [];
