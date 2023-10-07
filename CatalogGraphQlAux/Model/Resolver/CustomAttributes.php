@@ -186,10 +186,12 @@ class CustomAttributes implements ResolverInterface
         $selectedOptionValues = explode(',', $attributeValue);
 
         $attributeSource = $attribute->getSource();
-        if ($attributeSource && method_exists($attributeSource, 'getSelectedOptions')) {
+
+        if ($attributeSource && method_exists($attributeSource, 'getSpecificOptions')) {
             $options = $attributeSource->getSpecificOptions($selectedOptionValues);
         } elseif ($attributeSource) {
-            $options = array_filter($attributeSource->getAllOptions(), function ($option) use ($selectedOptionValues) {
+            $allOptions = $attribute->getData('options') ?? $attributeSource->getAllOptions();
+            $options = array_filter($allOptions, function ($option) use ($selectedOptionValues) {
                 return in_array($option['value'], $selectedOptionValues);
             });
         } else {
