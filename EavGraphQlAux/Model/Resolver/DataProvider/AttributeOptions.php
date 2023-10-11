@@ -32,33 +32,79 @@ class AttributeOptions
      * Get attribute options data
      *
      * @param AttributeInterface $attribute
+     * @param array $option_ids
      * @return array
      * @throws LocalizedException
      */
-    public function getAttributeOptions(AttributeInterface $attribute): array
+    public function getAttributeOptions(AttributeInterface $attribute, array $option_ids = []): array
     {
-        $options = $attribute->getOptions() ?? [];
+        $options = $option_ids ? $this->getSpecificOptions($attribute, $option_ids) :
+            $this->getAllOptions($attribute);
+
         $optionsData = [];
         foreach ($options as $option) {
-            if ($option->getValue() === '') {
+            if ($option['value'] === '') {
                 continue;
             }
 
             $optionDetails = [
                 $attribute->getEntityType()->getEntityTypeCode(),
                 $attribute->getAttributeCode(),
-                (string) $option->getValue()
+                (string)$option['value']
             ];
 
             $uidString = implode('/', $optionDetails);
 
             $optionsData[] = [
                 'uid' => $this->uidEncoder->encode($uidString),
-                'value' => $option->getValue(),
-                'label' => $option->getLabel(),
-                'is_default' => $option->getValue() === $attribute->getDefaultValue()
+                'value' => $option['value'],
+                'label' => $option['label'],
+                'is_default' => $option['value'] === $attribute->getDefaultValue()
             ];
         }
         return $optionsData;
+    }
+
+    /**
+     * Get specific options for attribute
+     *
+     * @param AttributeInterface $attribute
+     * @param array $option_ids
+     * @return array
+     */
+    private function getSpecificOptions(AttributeInterface $attribute, array $option_ids) : array
+    {
+        $options = [];
+        $attributeSource = $attribute->usesSource() ? $attribute->getSource() : null;
+        if ($attributeSource && method_exists($attributeSource, 'getSpecificOptions')) {
+            $options = $attributeSource->getSpecificOptions($option_ids);
+        } else {
+            $allOptions = $this->getAllOptions($attribute);
+            $selectedOptionIdsLookup = array_flip($option_ids);
+
+            foreach ($allOptions as $option) {
+                if (isset($selectedOptionIdsLookup[$option['value']])) {
+                    $options[] = $option;
+                }
+            }
+        }
+
+        return $options;
+    }
+
+    /**
+     * Get all options for attribute
+     *
+     * @param AttributeInterface $attribute
+     * @return array
+     */
+    private function getAllOptions(AttributeInterface $attribute) : array
+    {
+        $options = $attribute->getData(AttributeInterface::OPTIONS);
+        if (!$options) {
+            $options = $attribute->usesSource() ? $attribute->getSource()->getAllOptions() : [];
+        }
+
+        return $options;
     }
 }

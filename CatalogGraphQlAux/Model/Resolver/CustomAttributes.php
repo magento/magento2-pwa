@@ -183,16 +183,9 @@ class CustomAttributes implements ResolverInterface
         AttributeInterface $attribute,
         string $attributeValue
     ): array {
-        $selectedOptionValues = explode(',', $attributeValue);
+        $selectedOptionIds = explode(',', $attributeValue);
 
-        $selectedOptions = [];
-        foreach ($this->attributeOptions->getAttributeOptions($attribute) as $option) {
-            if (in_array($option['value'], $selectedOptionValues)) {
-                $selectedOptions[] = $option;
-            }
-        }
-
-        return $selectedOptions;
+        return $this->attributeOptions->getAttributeOptions($attribute, $selectedOptionIds);
     }
 
     /**
