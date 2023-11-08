@@ -1,11 +1,19 @@
 # Copyright © Magento, Inc. All rights reserved.
 # See COPYING.txt for license details.
 
+type CustomerOrder {
+    state: String! @doc(description: "The current state of the order.") @resolver(class: "Magento\\SalesGraphQlAux\\Model\\Resolver\\OrderState")
+}
 
 type Query {
     searchTerm (
         Search: String @doc(description: "An input of Search Term")
     ) : SearchTerm @resolver(class: "Magento\\SalesGraphQlAux\\Model\\Resolver\\SearchTerm") 
+}
+
+type Cart @doc(description: "Contains the contents and other details about a guest or customer cart.") {
+   total_summary_quantity_including_config: Float! @resolver(class: "\\Magento\\SalesGraphQlAux\\Model\\Resolver\\CartConfig") @doc(description: "The total number of items in the cart.")
+    is_virtual: Boolean! @resolver(class: "\\Magento\\QuoteGraphQl\\Model\\Resolver\\CartIsVirtual") @doc(description: "Indicates whether the cart contains only virtual products.")
 }
 
 type SearchTerm {

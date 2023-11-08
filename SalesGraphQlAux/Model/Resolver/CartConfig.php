@@ -5,7 +5,7 @@
  */
 declare(strict_types=1);
 
-namespace Magento\QuoteGraphQlPwa\Model\Resolver;
+namespace Magento\SalesGraphQlAux\Model\Resolver;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Exception\LocalizedException;
