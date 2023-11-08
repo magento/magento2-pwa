@@ -17,7 +17,8 @@
         "magento/module-store": "*"
     },
     "suggest": {
-        "magento/module-graph-ql": "*"
+        "magento/module-graph-ql": "*",
+        "magento/module-quote-graph-ql": "*"
     },
     "autoload": {
         "files": [
