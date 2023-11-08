@@ -4,7 +4,7 @@
  * See COPYING.txt for license details.
  */
 
-namespace Magento\PaymentAux\Plugin;
+namespace Magento\SalesGraphQlAux\Plugin;
 use Magento\Quote\Model\Quote;
 
 /**
