@@ -9,6 +9,8 @@
     <module name="Magento_SalesGraphQlAux" >
         <sequence>
             <module name="Magento_SalesGraphQl"/>
+            <module name="Magento_Search"/>
+			<module name="Magento_GraphQl"/>
         </sequence>
     </module>
 </config>
