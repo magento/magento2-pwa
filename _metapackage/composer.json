@@ -11,9 +11,7 @@
         "magento/module-re-captcha-graph-ql-pwa": "*",
         "magento/module-page-builder-pwa": "*",
         "magento/module-url-rewrite-graph-ql-pwa": "*",
-        "magento/module-sales-graph-ql-aux": "*",
-        "magento/module-quote-graph-ql-pwa": "*",
-        "magento/module-search-graphql-pwa": "*"
+        "magento/module-sales-graph-ql-aux": "*"
     },
     "type": "metapackage"
 }
