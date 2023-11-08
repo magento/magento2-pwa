@@ -1,5 +1,5 @@
 {
-    "name": "searchqraphqlpwa/module-model",
+    "name": "magento/module-search-graphql-pwa",
     "description": "Module for graphql",
     "type": "magento2-module",
     "license": "GPL-3.0",
