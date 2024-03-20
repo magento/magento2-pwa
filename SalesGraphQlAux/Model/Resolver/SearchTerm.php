@@ -16,8 +16,15 @@ use Magento\Search\Model\Query;
 
 class SearchTerm implements ResolverInterface
 {
+    /**
+     * @var Query
+     */
     protected $query; 
-    public function __construct($subject, $result, \Magento\Search\Model\Query $query)
+
+    /**
+     * @param Query $query
+     */
+    public function __construct(Query $query)
     {
         $this->query = $query;
     }
