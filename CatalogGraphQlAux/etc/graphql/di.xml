@@ -16,6 +16,9 @@
     <type name="Magento\CatalogGraphQl\Model\Resolver\Products\Query\FieldSelection">
         <plugin name="custom-attributes-fields" type="Magento\CatalogGraphQlAux\Plugin\Query\FieldSelection"/>
     </type>
+     <type name="Magento\CatalogGraphQl\DataProvider\Product\LayeredNavigation\Builder\Category">
+        <plugin name="category-uid-update" type="Magento\CatalogGraphQlAux\Plugin\CategoryUpdate"/>
+    </type>
     <type name="Magento\CatalogGraphQl\DataProvider\Product\LayeredNavigation\Builder\Price">
         <plugin name="price-add-position" type="Magento\CatalogGraphQlAux\Plugin\Price"/>
     </type>
