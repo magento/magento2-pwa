@@ -1,0 +1,7 @@
+# Copyright © Magento, Inc. All rights reserved.
+# See COPYING.txt for license details.
+
+
+type CustomerToken @doc(description: "Contains a customer authorization token.") {
+    customer_token_lifetime: Int @resolver(class:"\\Magento\\CustomerGraphQlPwa\\Model\\Resolver\\customerTokenLifetime") @doc(description:"Generate logout time") 
+}
