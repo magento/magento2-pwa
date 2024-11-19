@@ -5,3 +5,7 @@
 type CustomerToken @doc(description: "Contains a customer authorization token.") {
     customer_token_lifetime: Int @resolver(class:"\\Magento\\CustomerGraphQlPwa\\Model\\Resolver\\customerTokenLifetime") @doc(description:"Generate logout time") 
 }
+
+type Customer @doc(description: "Defines the customer name, addresses, and other details.") {
+    is_confirmed: Boolean @doc(description: "Customer's confirmation status (confirmed/confirmation not required - true, unconfirmed - false).") @resolver(class: "Magento\\CustomerGraphQlPwa\\Model\\Resolver\\IsConfirmed")
+}
