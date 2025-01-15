@@ -69,27 +69,25 @@ class RoutePluginTest extends TestCase
         $this->assertEquals($previousResult, $result);
     }
 
-    public function testReturnsNullWhenNoStores()
+    public function testReturnsNotFoundWhenNoStores()
     {
-        // Test returns null if no other stores
         $context = $this->getMockContext();
         $previousResult = null;
 
-        $this->setAvailableStores([1]);
+        $this->setAvailableStores([1]); // Only the current store available.
 
         $result = $this->callPlugin($previousResult, $context);
 
-        $this->urlFinder->expects($this->never())
-            ->method('findOneByData');
-        $this->entityDataProvider->expects($this->never())
-            ->method('getData');
-
-        $this->assertNull($result);
+        $this->assertEquals([
+            'redirect_code' => 404,
+            'relative_url' => self::URL_FROM,
+            'type' => 'PWA_404'
+        ], $result);
     }
 
-    public function testReturnsNullWhenNotFound()
+
+    public function testReturnsNotFoundWhenNotFound()
     {
-        // Test returns null if no matching URL found
         $context = $this->getMockContext();
         $previousResult = null;
 
@@ -104,13 +102,15 @@ class RoutePluginTest extends TestCase
             ])
             ->willReturn(null);
 
-        $this->entityDataProvider->expects($this->never())
-            ->method('getData');
-
         $result = $this->callPlugin($previousResult, $context);
 
-        $this->assertNull($result);
+        $this->assertEquals([
+            'redirect_code' => 404,
+            'relative_url' => self::URL_FROM,
+            'type' => 'PWA_404'
+        ], $result);
     }
+
 
     public function testReturnsNullWhenNoRedirect()
     {

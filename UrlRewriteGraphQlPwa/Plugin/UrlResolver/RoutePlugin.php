@@ -81,12 +81,20 @@ class RoutePlugin
 
         $otherStores = $this->getOtherStoreIds($targetStoreId);
         if (empty($otherStores)) {
-            return null;
+            return [
+                'redirect_code' => 404,  // Set the redirect code to 404
+                'relative_url' => $url,  // The URL being requested
+                'type' => 'PWA_404',
+            ];
         }
 
         $validUrlEntity = $this->getUrlEntity($url, $otherStores);
         if ($validUrlEntity === null) {
-            return null;
+            return [
+                'redirect_code' => 404,  // Set the redirect code to 404
+                'relative_url' => $url,  // The URL being requested
+                'type' => 'PWA_404',
+            ];
         }
 
         $targetStoreView = $this->urlFinder->findOneByData(
@@ -99,7 +107,11 @@ class RoutePlugin
         );
 
         if ($targetStoreView === null) {
-            return null;
+            return [
+                'redirect_code' => 404,  // Set the redirect code to 404
+                'relative_url' => $url,  // The URL being requested
+                'type' => 'PWA_404',
+            ];
         }
 
         $targetUrl = $targetStoreView->getRequestPath();
