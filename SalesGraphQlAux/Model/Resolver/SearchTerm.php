@@ -32,7 +32,7 @@ class SearchTerm implements ResolverInterface
     /**
      * @inheritdoc
      */
-    public function resolve(Field $field, $context, ResolveInfo $info, array $value = null, array $args = null) 
+    public function resolve(Field $field, $context, ResolveInfo $info, ?array $value = null, ?array $args = null) 
     {
         $result = $this->query->loadByQueryText($args["Search"]);
         return $result->getData();

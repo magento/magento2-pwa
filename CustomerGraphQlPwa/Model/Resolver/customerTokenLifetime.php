@@ -42,8 +42,8 @@ class customerTokenLifetime implements ResolverInterface
         Field $field, 
         $context, 
         ResolveInfo $info, 
-        array $value = null, 
-        array $args = null
+        ?array $value = null, 
+        ?array $args = null
     ){
         return $this->oauthHelper->getCustomerTokenLifetime() * 3600;
     }

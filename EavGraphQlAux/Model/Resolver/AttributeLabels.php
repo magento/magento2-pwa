@@ -35,7 +35,7 @@ class AttributeLabels implements ResolverInterface
     /**
      * @inheritdoc
      */
-    public function resolve(Field $field, $context, ResolveInfo $info, array $value = null, array $args = null)
+    public function resolve(Field $field, $context, ResolveInfo $info, ?array $value = null, ?array $args = null)
     {
         if (!isset($value['attribute_labels'])) {
             throw new LocalizedException(__('"attribute_labels" value should be specified'));

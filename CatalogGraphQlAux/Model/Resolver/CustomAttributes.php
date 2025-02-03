@@ -69,8 +69,8 @@ class CustomAttributes implements ResolverInterface
         Attributes $attributes,
         AttributeMetadata $metadataProvider,
         AttributeOptions $attributeOptions,
-        array $selectableTypes = null,
-        OutputHelper $outputHelper = null
+        ?array $selectableTypes = null,
+        ?OutputHelper $outputHelper = null
     ) {
         $this->uidEncoder = $uidEncoder;
         $this->attributes = $attributes;
@@ -88,8 +88,8 @@ class CustomAttributes implements ResolverInterface
         Field $field,
         $context,
         ResolveInfo $info,
-        array $value = null,
-        array $args = null
+        ?array $value = null,
+        ?array $args = null
     ) {
         if (!isset($value['model'])) {
             throw new LocalizedException(__('"model" value should be specified'));
