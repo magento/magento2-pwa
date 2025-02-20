@@ -40,7 +40,7 @@ class IsConfirmed implements ResolverInterface
     ) {
         try {
             $id = (int) $value['model']->getId() ?? '';
-            if ($this->accountManagement->getConfirmationStatus($id)) {
+            if ($this->accountManagement->getConfirmationStatus($id) == AccountManagementInterface::ACCOUNT_CONFIRMATION_REQUIRED) {
                 throw new EmailNotConfirmedException(
                     __(
                         'Your account is created, You must confirm your account. 
