@@ -1,0 +1,19 @@
+# Copyright © Magento, Inc. All rights reserved.
+# See COPYING.txt for license details.
+
+type Customer {
+    group_code: String @doc(description: "The customer's Group code.")
+}
+
+type StoreConfig {
+    ls_environment_id: String @doc(description: "Returns Environment Id from Services Id configuration")
+    ls_page_size_options: String @doc(description: "Returns results per page options from config.")
+    ls_page_size_default: String @doc(description: "Returns results per page default from config.")
+    ls_autocomplete_limit: Int @doc(description: "Page Size limit for Search Autocomplete.")
+    ls_locale: String @doc(description: "Returns locale language from config.")
+    ls_allow_all: Boolean! @doc(description: "Indicates whether to allow all products in results per page options.")
+    ls_display_out_of_stock: Boolean! @doc(description: "Indicates whether to display out of stock from config.")
+    ls_min_query_length: String @doc(description: "Retrieve minimum query length")
+    ls_service_api_key: String @doc(description: "Service connecter API key")
+    ls_environment_type: String @doc(description: "Get if Environment type is Production or Testing")
+}

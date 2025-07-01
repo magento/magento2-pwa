@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\CustomerGraphQl\Model\Customer\ExtractCustomerData">
+        <plugin sortOrder="10" name="add_customer_group_code"
+                type="Magento\LiveSearchGraphQlPwa\Plugin\Customer\AfterExtractCustomerData"/>
+    </type>
+    <type name="Magento\StoreGraphQl\Model\Resolver\Store\StoreConfigDataProvider">
+        <arguments>
+            <argument name="extendedConfigData" xsi:type="array">
+                <item name="ls_environment_id" xsi:type="string">services_connector/services_id/environment_id</item>
+                <item name="ls_page_size_options" xsi:type="string">catalog/frontend/grid_per_page_values</item>
+                <item name="ls_page_size_default" xsi:type="string">catalog/frontend/grid_per_page</item>
+                <item name="ls_autocomplete_limit" xsi:type="string">catalog/search/autocomplete_limit</item>
+                <item name="ls_locale" xsi:type="string">general/locale/code</item>
+                <item name="ls_allow_all" xsi:type="string">catalog/frontend/list_allow_all</item>
+                <item name="ls_display_out_of_stock" xsi:type="string">cataloginventory/options/show_out_of_stock</item>
+                <item name="ls_min_query_length" xsi:type="string">catalog/search/min_query_length</item>
+                <item name="ls_service_api_key" xsi:type="string">services_connector/services_connector_integration/production_api_key</item>
+                <item name="ls_environment_type" xsi:type="string">services_connector/services_id/environment</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

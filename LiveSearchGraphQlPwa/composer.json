@@ -1,0 +1,30 @@
+{
+    "name": "magento/module-live-search-graph-ql-pwa",
+    "description": "Provides additional GraphQl functionality for Live Search in PWA.",
+    "type": "magento2-module",
+    "license": [
+        "OSL-3.0",
+        "AFL-3.0"
+    ],
+    "config": {
+        "sort-packages": true
+    },
+    "require": {
+        "php": "~8.1.0||~8.2.0||~8.3.0",
+        "magento/framework": "*",
+        "magento/module-live-search": "*",
+        "magento/module-live-search-adapter": "*"
+    },
+    "suggest": {
+        "magento/module-graph-ql": "*"
+    },
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Magento\\LiveSearchGraphQlPwa\\": ""
+        }
+    }
+}
+
