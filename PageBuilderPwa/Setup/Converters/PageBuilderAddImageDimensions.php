@@ -13,7 +13,7 @@ use Magento\Cms\Model\Template\FilterProvider;
 use Magento\Framework\App\Area;
 use Magento\Framework\App\State;
 use Magento\Framework\DB\DataConverter\DataConverterInterface;
-use Magento\Framework\Filesystem\Driver\Http;
+use Magento\Framework\HTTP\Client\Curl;
 use Magento\PageBuilder\Model\Dom\HtmlDocumentFactory;
 
 /**
@@ -56,7 +56,7 @@ class PageBuilderAddImageDimensions implements DataConverterInterface
         HtmlDocumentFactory $htmlDocumentFactory,
         FilterProvider $filterProvider,
         State $state,
-        Http $http
+        Curl $http
     ) {
         $this->htmlDocumentFactory = $htmlDocumentFactory;
         $this->filterProvider = $filterProvider;
@@ -82,7 +82,9 @@ class PageBuilderAddImageDimensions implements DataConverterInterface
                         $srcAttr = $node->getAttribute('src');
                         try {
                             $srcUrl = $this->filterProvider->getPageFilter()->filter($srcAttr);
-                            $imageContent = $this->http->fileGetContents($srcUrl);
+                            $this->http->get($srcUrl);
+                            $imageContent =$this->http->getBody(); 
+                            // file_get_contents($srcUrl); 
                             list($width, $height) = getimagesizefromstring($imageContent);
                             $data = [
                                 'height' => $height,

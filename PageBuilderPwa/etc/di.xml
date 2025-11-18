@@ -13,4 +13,9 @@
             </argument>
         </arguments>
     </virtualType>
+    <type name="Magento\Cms\Model\BlockRepository">
+        <plugin name="pagebuilder_add_image_dimensions_on_block_save"
+                type="Magento\PageBuilderPwa\Plugin\Cms\BlockSavePlugin"
+                sortOrder="10"/>
+    </type>
 </config>

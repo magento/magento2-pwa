@@ -9,11 +9,12 @@
     "config": {
         "sort-packages": true
     },
+    "version": "0.10.2",
     "require": {
         "magento/framework": "*",
         "magento/module-cms": "*",
         "magento/module-page-builder": "*",
-        "magento/module-eav-graph-ql-aux": "*",
+        "magento/module-eav-graph-ql-aux": "0.10.*",
         "php": "~8.2.0||~8.3.0||~8.4.0",
         "phpgt/dom": "*"
     },
