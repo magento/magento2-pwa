@@ -25,3 +25,11 @@ interface ProductInterface {
     @doc(description: "List of product custom attributes details.")
     @deprecated(reason: "Use Adobe Commerce `custom_attributesV2` query instead")
 }
+type Query {
+  robotsConfig: RobotsConfig @resolver(class: "Magento\\CatalogGraphQlAux\\Model\\Resolver\\RobotsConfig")
+}
+
+type RobotsConfig {
+  defaultRobots: String
+  customInstructions: String
+}
