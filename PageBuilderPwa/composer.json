@@ -15,7 +15,7 @@
         "magento/module-cms": "*",
         "magento/module-page-builder": "*",
         "magento/module-eav-graph-ql-aux": "0.10.*",
-        "php": "~8.2.0||~8.3.0||~8.4.0",
+        "php": "~8.2.0||~8.3.0||~8.4.0||~8.5.0",
         "phpgt/dom": "*"
     },
     "autoload": {
