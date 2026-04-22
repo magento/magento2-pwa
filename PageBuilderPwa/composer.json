@@ -9,7 +9,6 @@
     "config": {
         "sort-packages": true
     },
-    "version": "0.10.2",
     "require": {
         "magento/framework": "*",
         "magento/module-cms": "*",
