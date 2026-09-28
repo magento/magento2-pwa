@@ -20,4 +20,6 @@ type ContactUsOutput @doc(description: "Contains the status of the request."){
 
 type StoreConfig {
     contact_enabled: Boolean! @doc(description: "Indicates whether the Contact Us form in enabled.")
+    product_canonical_tag: Boolean @doc(description: "Indicates whether product canonical url is enabled/disabled") @resolver(class: "Magento\\ContactGraphQlPwa\\Model\\Resolver\\ProductCanonicalConfig")
+    category_canonical_tag: Boolean @doc(description: "Indicates whether category canonical url is enabled/disabled") @resolver(class: "Magento\\ContactGraphQlPwa\\Model\\Resolver\\CategoryCanonicalConfig")
 }
