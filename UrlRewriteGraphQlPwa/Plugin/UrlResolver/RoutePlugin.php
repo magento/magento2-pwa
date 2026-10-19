@@ -15,6 +15,7 @@ use Magento\UrlRewrite\Model\UrlFinderInterface;
 use Magento\UrlRewrite\Service\V1\Data\UrlRewrite;
 use Magento\UrlRewriteGraphQl\Model\DataProvider\EntityDataProviderComposite;
 use Magento\UrlRewriteGraphQl\Model\Resolver\Route;
+use Magento\Framework\GraphQl\Exception\GraphQlNoSuchEntityException;
 
 class RoutePlugin
 {
@@ -40,6 +41,74 @@ class RoutePlugin
         $this->urlFinder = $urlFinder;
         $this->storeRepository = $storeRepository;
         $this->entityDataProviderComposite = $entityDataProviderComposite;
+    }
+
+    /**
+     * Handle unresolved route destinations without failing the storefront.
+     *
+     * @param Route $subject
+     * @param callable $proceed
+     * @param Field $field
+     * @param ContextInterface $context
+     * @param ResolveInfo $info
+     * @param array|null $value
+     * @param array|null $args
+     * @return array|null
+     */
+    public function aroundResolve(
+        Route $subject,
+        callable $proceed,
+        Field $field,
+        ContextInterface $context,
+        ResolveInfo $info,
+        ?array $value = null,
+        ?array $args = null
+    ): ?array {
+
+        try {
+            return $proceed($field, $context, $info, $value, $args);
+        } catch (GraphQlNoSuchEntityException $exception) {
+            $url = $args['url'] ?? '/';
+
+            // phpcs:ignore Magento2.Functions.DiscouragedFunction
+            $urlParts = parse_url($url);
+            $path = is_array($urlParts) && isset($urlParts['path'])
+                ? $urlParts['path']
+                : $url;
+            $requestPath = ltrim($path, '/');
+
+            $storeId = (int) $context->getExtensionAttributes()
+                ->getStore()
+                ->getId();
+
+            $rewrite = $this->urlFinder->findOneByData([
+                UrlRewrite::REQUEST_PATH => $requestPath,
+                UrlRewrite::STORE_ID => $storeId,
+            ]);
+
+            if (
+                $rewrite !== null
+                && in_array((int) $rewrite->getRedirectType(), [301, 302], true)
+            ) {
+                return [
+                    'id' => null,
+                    'entity_uid' => null,
+                    'canonical_url' => $rewrite->getTargetPath(),
+                    'relative_url' => $rewrite->getTargetPath(),
+                    'redirect_code' => (int) $rewrite->getRedirectType(),
+                    'type' => null,
+                ];
+            }
+
+            return [
+                'id' => null,
+                'entity_uid' => null,
+                'canonical_url' => $path,
+                'relative_url' => $path,
+                'redirect_code' => 404,
+                'type' => null,
+            ];
+        }
     }
 
     /**
